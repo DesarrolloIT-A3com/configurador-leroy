@@ -1,0 +1,35 @@
+services:
+  web:
+    build:
+      context: ./docker/web
+      dockerfile: Dockerfile
+    container_name: configurador-web
+    ports:
+      - "80:80"                # si el 80 está ocupado usa "8080:80"
+    volumes:
+      - ./:/var/www/html       # ⟵ monta **la raíz** (donde está index.php)
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.0
+    container_name: configurador-db
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_DATABASE: 8432940_arjomy-17-10-22
+      MYSQL_USER: appuser
+      MYSQL_PASSWORD: apppass
+    # NO expongas 3306 si ya lo usa MySQL80 en Windows
+    # ports:
+    #   - "3307:3306"
+
+  phpmyadmin:
+    image: phpmyadmin:5
+    container_name: configurador-pma
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+    ports:
+      - "8081:80"
+    depends_on:
+      - db

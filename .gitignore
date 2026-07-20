@@ -1,0 +1,5 @@
+*.sql
+*.csv
+/www/img/*
+!/www/img/.gitkeep
+error_log
