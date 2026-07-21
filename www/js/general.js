@@ -3879,7 +3879,7 @@ function recalcular_precio() {
         if(terminacion == "2"|| terminacion == "7" || terminacion == "18") porcentaje = 0.33 * porcentajeCristal;
         if(terminacion == "3" || terminacion == "8" || terminacion == "19" || terminacion == "28") porcentaje = 0.50 * porcentajeCristal;
         if(terminacion == "4" || terminacion == "17") porcentaje = 1 * porcentajeCristal;
-        var puerta = parseInt(medidas_ancho) / puertas; // Ancho de una puerta
+        var puerta = parseInt(medidas_ancho) / num_puertas; // Ancho de una puerta
         plus_dark_grey += (35 * (puerta * parseInt(alto) * porcentaje / 10000));
       }
     }
@@ -4470,7 +4470,7 @@ function recalcular_precio() {
           "€</span></div>"
       );
       $("#precio_montaje_frente").val(data.precio_montaje);
-      
+
       if (
         $("#desmontajes_frentes_1").is(":checked") ||
         $("#desmontajes_frentes_2").is(":checked") ||
