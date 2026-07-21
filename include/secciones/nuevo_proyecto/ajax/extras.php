@@ -81,7 +81,7 @@ else
 
 $tiradores = $db->getResults('SELECT id,tirador FROM tiradores WHERE id_series = ' . $id_serie);
 
-$uneros = $db->getResults('SELECT id,unero,format_id FROM uneros WHERE id_acabados = ' . $id_acabado);
+$uneros = $db->getResults('SELECT id,unero,format_id FROM uneros WHERE id_acabados = ' . $id_acabado . ' AND id_series = ' . $id_serie);
 
 if($num_modulos != 0){
 	$extras = $db->getResults('SELECT id, nombre, precio FROM extras WHERE id BETWEEN 1 AND 13 AND id NOT IN (7)');
