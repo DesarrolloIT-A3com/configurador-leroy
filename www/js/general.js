@@ -1290,6 +1290,7 @@ function continuar_proyecto(paso, paso_actual) {
                   $("#desmontajes_frentes_2").prop("checked", false);
                   $("#desmontajes_frentes_3").prop("checked", false);
                   $("#desmontajes_frentes_4").prop("checked", false);
+                  $("#desmontajes_frentes_5").prop("checked", false);
                   $("#desmontaje_frente_seleccionado").val(
                     $("#desmontajes_frentes_1").val()
                   );
@@ -1303,6 +1304,7 @@ function continuar_proyecto(paso, paso_actual) {
                   $("#desmontajes_frentes_1").prop("checked", false);
                   $("#desmontajes_frentes_3").prop("checked", false);
                   $("#desmontajes_frentes_4").prop("checked", false);
+                  $("#desmontajes_frentes_5").prop("checked", false);
                   $("#desmontaje_frente_seleccionado").val(
                     $("#desmontajes_frentes_2").val()
                   );
@@ -1316,6 +1318,7 @@ function continuar_proyecto(paso, paso_actual) {
                   $("#desmontajes_frentes_2").prop("checked", false);
                   $("#desmontajes_frentes_1").prop("checked", false);
                   $("#desmontajes_frentes_4").prop("checked", false);
+                  $("#desmontajes_frentes_5").prop("checked", false);
                   $("#desmontaje_frente_seleccionado").val(
                     $("#desmontajes_frentes_3").val()
                   );
@@ -1329,8 +1332,23 @@ function continuar_proyecto(paso, paso_actual) {
                   $("#desmontajes_frentes_1").prop("checked", false);
                   $("#desmontajes_frentes_2").prop("checked", false);
                   $("#desmontajes_frentes_3").prop("checked", false);
+                  $("#desmontajes_frentes_5").prop("checked", false);
                   $("#desmontaje_frente_seleccionado").val(
                     $("#desmontajes_frentes_4").val()
+                  );
+                } else {
+                  $("#desmontaje_frente_seleccionado").val("");
+                }
+                actualizar_extras();
+              });
+              $("#desmontajes_frentes_5").change(function () {
+                if (this.checked) {
+                  $("#desmontajes_frentes_1").prop("checked", false);
+                  $("#desmontajes_frentes_2").prop("checked", false);
+                  $("#desmontajes_frentes_3").prop("checked", false);
+                  $("#desmontajes_frentes_4").prop("checked", false);
+                  $("#desmontaje_frente_seleccionado").val(
+                    $("#desmontajes_frentes_5").val()
                   );
                 } else {
                   $("#desmontaje_frente_seleccionado").val("");
@@ -1354,6 +1372,7 @@ function continuar_proyecto(paso, paso_actual) {
                   $("#desmontajes_interiores_2").prop("checked", false);
                   $("#desmontajes_interiores_3").prop("checked", false);
                   $("#desmontajes_interiores_4").prop("checked", false);
+                  $("#desmontajes_interiores_5").prop("checked", false);
                   $("#desmontaje_interior_seleccionado").val(
                     $("#desmontajes_interiores_1").val()
                   );
@@ -1367,6 +1386,7 @@ function continuar_proyecto(paso, paso_actual) {
                   $("#desmontajes_interiores_1").prop("checked", false);
                   $("#desmontajes_interiores_3").prop("checked", false);
                   $("#desmontajes_interiores_4").prop("checked", false);
+                  $("#desmontajes_interiores_5").prop("checked", false);
                   $("#desmontaje_interior_seleccionado").val(
                     $("#desmontajes_interiores_2").val()
                   );
@@ -1380,6 +1400,7 @@ function continuar_proyecto(paso, paso_actual) {
                   $("#desmontajes_interiores_2").prop("checked", false);
                   $("#desmontajes_interiores_1").prop("checked", false);
                   $("#desmontajes_interiores_4").prop("checked", false);
+                  $("#desmontajes_interiores_5").prop("checked", false);
                   $("#desmontaje_interior_seleccionado").val(
                     $("#desmontajes_interiores_3").val()
                   );
@@ -1393,8 +1414,23 @@ function continuar_proyecto(paso, paso_actual) {
                   $("#desmontajes_interiores_1").prop("checked", false);
                   $("#desmontajes_interiores_2").prop("checked", false);
                   $("#desmontajes_interiores_3").prop("checked", false);
+                  $("#desmontajes_interiores_5").prop("checked", false);
                   $("#desmontaje_interior_seleccionado").val(
                     $("#desmontajes_interiores_4").val()
+                  );
+                } else {
+                  $("#desmontaje_interior_seleccionado").val("");
+                }
+                actualizar_extras();
+              });
+              $("#desmontajes_interiores_5").change(function () {
+                if (this.checked) {
+                  $("#desmontajes_interiores_1").prop("checked", false);
+                  $("#desmontajes_interiores_2").prop("checked", false);
+                  $("#desmontajes_interiores_3").prop("checked", false);
+                  $("#desmontajes_interiores_4").prop("checked", false);
+                  $("#desmontaje_interior_seleccionado").val(
+                    $("#desmontajes_interiores_5").val()
                   );
                 } else {
                   $("#desmontaje_interior_seleccionado").val("");
@@ -3541,6 +3577,12 @@ function actualizar_extras() {
       $("#desmontajes_frentes_4").parent("label").html() +
       "</div>";
   }
+  if ($("#desmontajes_frentes_5").is(":checked")) {
+    txt_extras +=
+      '<div class="item_resumen_extras">' +
+      $("#desmontajes_frentes_5").parent("label").html() +
+      "</div>";
+  }
   if ($("#desmontajes_interiores_1").is(":checked")) {
     txt_extras +=
       '<div class="item_resumen_extras">' +
@@ -3563,6 +3605,12 @@ function actualizar_extras() {
     txt_extras +=
       '<div class="item_resumen_extras">' +
       $("#desmontajes_interiores_4").parent("label").html() +
+      "</div>";
+  }
+  if ($("#desmontajes_interiores_5").is(":checked")) {
+    txt_extras +=
+      '<div class="item_resumen_extras">' +
+      $("#desmontajes_interiores_5").parent("label").html() +
       "</div>";
   }
   if ($("#albanileria_con").is(":checked")) {
@@ -4422,67 +4470,53 @@ function recalcular_precio() {
           "€</span></div>"
       );
       $("#precio_montaje_frente").val(data.precio_montaje);
-
+      
       if (
-        ($("#desmontajes_frentes_1").is(":checked") ||
-          $("#desmontajes_frentes_2").is(":checked") ||
-          $("#desmontajes_frentes_3").is(":checked") ||
-          $("#desmontajes_frentes_4").is(":checked")) &&
-        ($("#desmontajes_interiores_1").is(":checked") ||
-          $("#desmontajes_interiores_2").is(":checked") ||
-          $("#desmontajes_interiores_3").is(":checked") ||
-          $("#desmontajes_interiores_4").is(":checked"))
+        $("#desmontajes_frentes_1").is(":checked") ||
+        $("#desmontajes_frentes_2").is(":checked") ||
+        $("#desmontajes_frentes_3").is(":checked") ||
+        $("#desmontajes_frentes_4").is(":checked") ||
+        $("#desmontajes_frentes_5").is(":checked")
       ) {
         $(".txt_resumen.precio .precio_montaje").after(
-          '<div class="precio_desmontaje">Precio desmontaje: <span>' +
-            data.precio_desmontaje +
+          '<div class="precio_desmontaje_frente">Precio desmontaje frente: <span>' +
+            data.precio_desmontaje_frente +
             "€</span></div>"
         );
-        $("#precio_desmontaje").val(data.precio_desmontaje);
+        $("#precio_desmontaje_frente").val(data.precio_desmontaje_frente);
       } else {
-        if (
-          $("#desmontajes_frentes_1").is(":checked") ||
-          $("#desmontajes_frentes_2").is(":checked") ||
-          $("#desmontajes_frentes_3").is(":checked") ||
-          $("#desmontajes_frentes_4").is(":checked")
-        ) {
-          $(".txt_resumen.precio .precio_montaje").after(
-            '<div class="precio_desmontaje_frente">Precio desmontaje frente: <span>' +
-              data.precio_desmontaje_frente +
-              "€</span></div>"
-          );
-          $("#precio_desmontaje_frente").val(data.precio_desmontaje_frente);
-        } else {
-          $(".txt_resumen.precio .precio_montaje").after(
-            '<div class="precio_desmontaje_frente"></div>'
-          );
-          $("#precio_desmontaje_frente").val(0);
-          $("#precio_desmontaje_frente_dist").val(0);
-        }
-
-        if (
-          $("#desmontajes_interiores_1").is(":checked") ||
-          $("#desmontajes_interiores_2").is(":checked") ||
-          $("#desmontajes_interiores_3").is(":checked") ||
-          $("#desmontajes_interiores_4").is(":checked")
-        ) {
-          $(".txt_resumen.precio .precio_desmontaje_frente").after(
-            '<div class="precio_desmontaje_interior">Precio desmontaje interior: <span>' +
-              data.precio_desmontaje_interior +
-              "€</span></div>"
-          );
-          $("#precio_desmontaje_interior").val(data.precio_desmontaje_interior);
-          $("#precio_desmontaje_interior_dist").val(
-            data.precio_desmontaje_interior_dist
-          );
-        } else {
-          $(".txt_resumen.precio .precio_desmontaje_frente").after(
-            '<div class="precio_desmontaje_interior"></div>'
-          );
-          $("#precio_desmontaje_interior").val(0);
-          $("#precio_desmontaje_interior_dist").val(0);
-        }
+        $(".txt_resumen.precio .precio_montaje").after(
+          '<div class="precio_desmontaje_frente"></div>'
+        );
+        $("#precio_desmontaje_frente").val(0);
+        $("#precio_desmontaje_frente_dist").val(0);
       }
+
+      if (
+        $("#desmontajes_interiores_1").is(":checked") ||
+        $("#desmontajes_interiores_2").is(":checked") ||
+        $("#desmontajes_interiores_3").is(":checked") ||
+        $("#desmontajes_interiores_4").is(":checked") ||
+        $("#desmontajes_interiores_5").is(":checked")
+
+      ) {
+        $(".txt_resumen.precio .precio_desmontaje_frente").after(
+          '<div class="precio_desmontaje_interior">Precio desmontaje interior: <span>' +
+            data.precio_desmontaje_interior +
+            "€</span></div>"
+        );
+        $("#precio_desmontaje_interior").val(data.precio_desmontaje_interior);
+        $("#precio_desmontaje_interior_dist").val(
+          data.precio_desmontaje_interior_dist
+        );
+      } else {
+        $(".txt_resumen.precio .precio_desmontaje_frente").after(
+          '<div class="precio_desmontaje_interior"></div>'
+        );
+        $("#precio_desmontaje_interior").val(0);
+        $("#precio_desmontaje_interior_dist").val(0);
+      }
+      
 
       if (data.precio_albanileria_con > 0) {
         $(".txt_resumen.precio .precio_desmontaje_interior").after(
@@ -4753,7 +4787,9 @@ function recalcular_precio() {
       );
     },
     "json"
-  );
+  ).fail(function(data){
+    console.log(data);
+  });
 }
 // APLICAMOS DESCUENTO AL CLIENTE
 function aplicar_descuento() {

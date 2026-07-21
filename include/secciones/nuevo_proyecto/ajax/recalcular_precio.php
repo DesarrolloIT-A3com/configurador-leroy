@@ -179,24 +179,45 @@ if($fijos > 0)
 }
 
 if ($desmontaje_frente > 0) {
-	$precio_desmontaje_frente = $db->getVar('SELECT precio FROM desmontajes_frentes WHERE id=' . $desmontaje_frente);
+	$max_hojas = $db->getVar('SELECT MAX(id) FROM desmontajes_frentes');
+	// En caso de que se seleccione más hojas de lo que hay en la base de datos se escoge el precio más alto
+	if($desmontaje_frente>$max_hojas)
+	{
+		$precio_desmontaje_frente = $db->getVar('SELECT precio FROM desmontajes_frentes WHERE id=' . $max_hojas);
+	}
+	else
+	{
+		$precio_desmontaje_frente = $db->getVar('SELECT precio FROM desmontajes_frentes WHERE id=' . $desmontaje_frente);
+	}
+
 	$precio_desmontaje_frente += $precio_desmontaje_frente * $pvp / 100;
 } else {
 	$precio_desmontaje_frente = 0;
 }
 if ($desmontaje_interior > 0) {
-	$precio_desmontaje_interior = $db->getVar('SELECT precio FROM desmontajes_interiores WHERE id=' . $desmontaje_interior);
+	$max_modulos = $db->getVar('SELECT MAX(id) FROM desmontajes_interiores');
+	// En caso de que se seleccione más modulos de lo que hay en la base de datos se escoge el precio más alto
+	if($desmontaje_interior>$max_modulos)
+	{
+		$precio_desmontaje_interior = $db->getVar('SELECT precio FROM desmontajes_interiores WHERE id=' . $max_modulos);
+	}
+	else
+	{
+		$precio_desmontaje_interior = $db->getVar('SELECT precio FROM desmontajes_interiores WHERE id=' . $desmontaje_interior);
+	}
+
 	$precio_desmontaje_interior += $precio_desmontaje_interior * $pvp / 100;
 } else {
 	$precio_desmontaje_interior = 0;
 }
-$precio_desmontaje = 0;
-if ($desmontaje_frente > 0 && $desmontaje_interior > 0) {
-	$precio_desmontaje = $db->getVar('SELECT precio FROM desmontajes_completo WHERE modulos=' . $desmontaje_interior);
-	$precio_desmontaje += $precio_desmontaje * $pvp / 100;
-	$precio_desmontaje_frente = 0;
-	$precio_desmontaje_interior = 0;
-}
+
+// $precio_desmontaje = 0;
+// if ($desmontaje_frente > 0 && $desmontaje_interior > 0) {
+// 	$precio_desmontaje = $db->getVar('SELECT precio FROM desmontajes_completo WHERE modulos=' . $desmontaje_interior);
+// 	$precio_desmontaje += $precio_desmontaje * $pvp / 100;
+// 	$precio_desmontaje_frente = 0;
+// 	$precio_desmontaje_interior = 0;
+// }
 
 if ($juego_led > 0) {
 	$ancho_led = ceil($medidas_ancho / 100) * 100;
@@ -560,7 +581,7 @@ $respuesta['precio_desmontaje_frente'] = number_format($precio_desmontaje_frente
 // PRECIO DEL DESMONTAJE DEL INTERIOR
 $respuesta['precio_desmontaje_interior'] = number_format($precio_desmontaje_interior, 2, ".", "");
 // PRECIO DEL DESMONTAJE
-$respuesta['precio_desmontaje'] = number_format($precio_desmontaje, 2, ".", "");
+// $respuesta['precio_desmontaje'] = number_format($precio_desmontaje, 2, ".", "");
 // PRECIO DEL MONTAJE
 // $respuesta['precio_montaje'] = number_format($precio_montaje, 2, ".", "");
 // PRECIO ALBAÑILERIA CON SOLERA
@@ -605,7 +626,7 @@ $respuesta['precio_montaje'] = number_format($montaje, 2, ".", "");
 
 
 // PRECIO TOTAL SIN IVA Y SIN DESCUENTO
-$respuesta['total'] = number_format($respuesta['precio_frente'] + $respuesta['cant_incremento_descuento'] + $plus_cream_stone + $plus_grey_stone + $respuesta['precio_modulos_interior'] + $respuesta["precio_montaje"] +  $respuesta['precio_accesorios_interior'] + $respuesta['cant_incremento_descuento_interior'] + $respuesta['precio_costados'] + $respuesta['precio_fijos'] + $respuesta['precio_desmontaje_frente'] + $respuesta['precio_desmontaje_interior'] + $respuesta['precio_desmontaje'] + $respuesta['precio_juego_led'] + $respuesta['precio_rematar_frente'] + $respuesta['precio_rematar_interior'] + $respuesta['precio_sistema_frenos'] + $respuesta['precio_herrajes_negros'] + $respuesta["precio_multitaladro"] + $respuesta['precio_espejo_extraible'] + $respuesta['precio_espejo_con_carril'] + $respuesta['precio_baldas_inclinadas'] + $respuesta['precio_remate_interior'] + $respuesta['precio_regleta_led'] + $respuesta['precio_leds_incrustados'] + $respuesta['precio_frente_abuardillado'] + $respuesta['precio_frente_chaflan'] + $respuesta["precio_recrecer_frente"] + $respuesta["precio_kit_plegable"] + $respuesta["precio_tirador_cubo"] + $respuesta["precio_tirador_disc"] + $respuesta["precio_tirador_conic"] + $respuesta["precio_tirador_line"] + $respuesta["precio_unero_rebajado"] + $respuesta["precio_unero_color_madera"] + $respuesta['precio_albanileria_con'] + $respuesta['precio_albanileria_sin'] + $respuesta['precio_km_medicion'] + $respuesta['precio_km_montaje'] + $respuesta['precio_extras_1'] + $respuesta['precio_extras_2'] + $respuesta['precio_extras_3'] + $respuesta['precio_extras_4'] + $respuesta['precio_extras_5'] + $respuesta['precio_extras_6'] + $respuesta['precio_extras_7'] + $respuesta['precio_extras_8'] + $respuesta['precio_extras_9'] + $respuesta['precio_albanileria_sencilla'] + $respuesta['precio_albanileria_tirar_tabique'] + $respuesta['precio_albanileria_quitar_solera'] + $respuesta['precio_albanileria_mover_enchufe'] + $respuesta['precio_albanileria_costado_pladur'], 2, ".", "");
+$respuesta['total'] = number_format($respuesta['precio_frente'] + $respuesta['cant_incremento_descuento'] + $plus_cream_stone + $plus_grey_stone + $respuesta['precio_modulos_interior'] + $respuesta["precio_montaje"] +  $respuesta['precio_accesorios_interior'] + $respuesta['cant_incremento_descuento_interior'] + $respuesta['precio_costados'] + $respuesta['precio_fijos'] + $respuesta['precio_desmontaje_frente'] + $respuesta['precio_desmontaje_interior'] + /*$respuesta['precio_desmontaje']*/ + $respuesta['precio_juego_led'] + $respuesta['precio_rematar_frente'] + $respuesta['precio_rematar_interior'] + $respuesta['precio_sistema_frenos'] + $respuesta['precio_herrajes_negros'] + $respuesta["precio_multitaladro"] + $respuesta['precio_espejo_extraible'] + $respuesta['precio_espejo_con_carril'] + $respuesta['precio_baldas_inclinadas'] + $respuesta['precio_remate_interior'] + $respuesta['precio_regleta_led'] + $respuesta['precio_leds_incrustados'] + $respuesta['precio_frente_abuardillado'] + $respuesta['precio_frente_chaflan'] + $respuesta["precio_recrecer_frente"] + $respuesta["precio_kit_plegable"] + $respuesta["precio_tirador_cubo"] + $respuesta["precio_tirador_disc"] + $respuesta["precio_tirador_conic"] + $respuesta["precio_tirador_line"] + $respuesta["precio_unero_rebajado"] + $respuesta["precio_unero_color_madera"] + $respuesta['precio_albanileria_con'] + $respuesta['precio_albanileria_sin'] + $respuesta['precio_km_medicion'] + $respuesta['precio_km_montaje'] + $respuesta['precio_extras_1'] + $respuesta['precio_extras_2'] + $respuesta['precio_extras_3'] + $respuesta['precio_extras_4'] + $respuesta['precio_extras_5'] + $respuesta['precio_extras_6'] + $respuesta['precio_extras_7'] + $respuesta['precio_extras_8'] + $respuesta['precio_extras_9'] + $respuesta['precio_albanileria_sencilla'] + $respuesta['precio_albanileria_tirar_tabique'] + $respuesta['precio_albanileria_quitar_solera'] + $respuesta['precio_albanileria_mover_enchufe'] + $respuesta['precio_albanileria_costado_pladur'], 2, ".", "");
 // IVA CORRESPONDIENTE AL PRECIO TOTAL
 $respuesta['iva'] = number_format(round($respuesta['total'] * $_SESSION['iva'] / 100, 2), 2, ".", "");
 // PRECIO PARA EL DISTRIBUIDOR CON SU DESCUENTO PARA FRENTE, INTERIOR, TAPETAS Y LATERALES
@@ -616,7 +637,7 @@ $precio_distribuidor_iva = round($precio_distribuidor + $precio_distribuidor * $
 $respuesta['referencia'] = str_pad($tarifa, 2, "0", STR_PAD_LEFT) . "-" . str_pad(number_format($precio_distribuidor_iva, 2, ".", ""), 10, "0", STR_PAD_BOTH);
 
 // PRECIO DISTRIBUIDOR 2
-$precio_distribuidor_2 = $precio_desmontaje_frente + $precio_desmontaje_interior + $precio_desmontaje + $precio_albanileria_con + $precio_albanileria_sin + $montaje;
+$precio_distribuidor_2 = $precio_desmontaje_frente + $precio_desmontaje_interior + /*$precio_desmontaje*/ + $precio_albanileria_con + $precio_albanileria_sin + $montaje;
 $respuesta['referencia_2'] = str_pad("2", 2, "0", STR_PAD_LEFT) . "-" . str_pad(number_format($precio_distribuidor_2 + $precio_distribuidor_2 * $_SESSION['iva'] / 100, 2, ".", ""), 10, "0", STR_PAD_BOTH);
 
 echo json_encode($respuesta);
