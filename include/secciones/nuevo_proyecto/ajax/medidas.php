@@ -44,8 +44,8 @@ $fondo_max = 100;
 				</div>
 				<div class="leyenda_seccion_medidas">
 					Min. <?php echo $alto_total_min; ?> - Max. <?php echo $alto_total_max; ?><br />
-					<small>* Altura máxima para frente modelo Liso, Lama, Mayorquina, Japonés, Hong Kong y Serigrafía 260 cm. Hasta 270 cm. 10% incremento y hasta 275 cm. 20% incremento.<br />
-					* Altura máxima para frente modelo Pico gorrión, Cenefas, Inserciones cerámicas y Pantografía 250 cm.<br />
+					<small>* Altura máxima para frente modelo Liso, Lama, Mayorquina, Japonés y Hong Kong 260 cm. Hasta 270 cm. 10% incremento y hasta 275 cm. 20% incremento.<br />
+					* Altura máxima para frente modelo Pico gorrión y Pantografía 250 cm.<br />
 					* Altura máxima para frentes barnizados 260 cm.<br />
 					* Menos de 130 cm. descuenta precio 25%.<br />
 					* Menos de 60 cm. descuenta precio 45%.<br />
