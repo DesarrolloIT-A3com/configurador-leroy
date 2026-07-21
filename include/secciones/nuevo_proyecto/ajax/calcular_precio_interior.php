@@ -54,6 +54,8 @@ $plus_grey_stone = 0;
 if(isset($_POST['plus_grey_stone']) && $_POST['plus_grey_stone'] > 0)				$plus_grey_stone = (int)$_POST['plus_grey_stone'];
 $plus_dark_grey = 0;
 if(isset($_POST['plus_dark_grey']) && $_POST['plus_dark_grey'] > 0)				$plus_dark_grey = (int)$_POST['plus_dark_grey'];
+$plus_ral = 0;
+if(isset($_POST['plus_ral']) && $_POST['plus_ral'] > 0)				$plus_ral = (int)$_POST['plus_ral'];
 
 $precio_modulos = 0; // PRECIO SIN ACCESORIOS
 if($interior_1 != ""){ // SI SE HA ELEGIDO AL MENOS UN INTERIOR
@@ -279,6 +281,14 @@ if($modulos_interior!=0 && $montaje==0)
 	$montaje = $db->getVar('SELECT precio FROM montajes_interiores WHERE modulos = '.$modulos_interior);
 }
 
+$incremento_ral = 0;
+
+if($plus_ral == 1)
+{
+	$valor_incremento = 20 / 100;
+	$incremento_ral = ($precio_frente + $cant_inc_desc_frente) * $valor_incremento;	
+}
+
 $pvp = $db->getVar('SELECT porcentaje FROM tarifa WHERE id = '.$tarifa);
 
 $respuesta = array();
@@ -290,6 +300,8 @@ $respuesta['plus_cream_stone'] = number_format($plus_cream_stone,2,".","");
 $respuesta['plus_grey_stone'] = number_format($plus_grey_stone,2,".","");
 // PLUS POR DARK GREY
 $respuesta['plus_dark_grey'] = number_format($plus_dark_grey + $plus_dark_grey * $pvp / 100,2,".","");
+// INCREMENTO BLANCO RAL 9010
+$respuesta['plus_ral'] = number_format($incremento_ral,2,".","");
 // MONTAJE
 $respuesta['montaje'] = number_format($montaje,2,".","");
 // PRECIO DEL INCREMENTO O DESCUENTO POR ALTURA
@@ -307,7 +319,7 @@ $respuesta['incremento_descuento_interior'] = $incremento_descuento_interior;
 // PRECIO DEL INCREMENTO O DESCUENTO POR ALTURA SI TIENE
 $respuesta['cant_incremento_descuento_interior'] = number_format(round($cant_incremento_descuento_interior  + $cant_incremento_descuento_interior * $pvp / 100, 2),2,".","");
 // PRECIO TOTAL SIN IVA
-$respuesta['total'] = number_format($respuesta['precio_frente']+ $plus_cream_stone + $plus_grey_stone + $respuesta['montaje'] + $respuesta['cant_incremento_descuento'] + $respuesta['precio_modulos_interior'] + $respuesta['precio_accesorios_interior'] + $respuesta['cant_incremento_descuento_interior'],2,".","");
+$respuesta['total'] = number_format($respuesta['precio_frente']+ $plus_cream_stone + $plus_grey_stone + $plus_dark_grey + $plus_ral + $respuesta['montaje'] + $respuesta['cant_incremento_descuento'] + $respuesta['precio_modulos_interior'] + $respuesta['precio_accesorios_interior'] + $respuesta['cant_incremento_descuento_interior'],2,".","");
 // IVA CORRESPONDIENTE AL PRECIO TOTAL
 $respuesta['iva'] = number_format(round($respuesta['total'] * $_SESSION['iva'] / 100, 2),2,".","");;
 // PRECIO PARA EL DISTRIBUIDOR CON SU DESCUENTO, SOLO SE APLICA DESCUENTO A FRENTE Y A MODULOS DE INTERIOR

@@ -56,6 +56,8 @@ $plus_grey_stone = 0;
 if(isset($_POST['plus_grey_stone']) && $_POST['plus_grey_stone'] > 0)		$plus_grey_stone = (int)$_POST['plus_grey_stone'];
 $plus_dark_grey = 0;
 if(isset($_POST['plus_dark_grey']) && $_POST['plus_dark_grey'] > 0)		$plus_dark_grey = (int)$_POST['plus_dark_grey'];
+$plus_ral = 0;
+if(isset($_POST['plus_ral']) && $_POST['plus_ral'] > 0)		$plus_ral = (int)$_POST['plus_ral'];
 
 $ancho_precio_armario = $db->getVar('SELECT MIN(ancho) FROM ancho_puertas WHERE id_series = '.$serie.' AND puertas = '.$puertas.' AND ancho >= '.$ancho.' GROUP BY(ancho)');
 $montaje = $db->getVar('SELECT precio FROM montajes_frentes WHERE id_series = '.$serie.' AND hojas = '.$puertas);
@@ -98,6 +100,14 @@ for($i=1; $i<=$puertas; $i++){
 	}
 }
 
+$incremento_ral = 0;
+
+if($plus_ral == 1)
+{
+	$valor_incremento = 20 / 100;
+	$incremento_ral = $precio * $valor_incremento; 
+}
+
 $pvp = $db->getVar('SELECT porcentaje FROM tarifa WHERE id = 1');
 
 $respuesta = array();
@@ -117,8 +127,10 @@ $respuesta['plus_cream_stone'] = number_format($plus_cream_stone,2,".","");
 $respuesta['plus_grey_stone'] = number_format($plus_grey_stone,2,".","");
 // PLUS POR DARK GREY
 $respuesta['plus_dark_grey'] = number_format($plus_dark_grey + $plus_dark_grey * $pvp / 100,2,".","");
+// INCREMENTO DE RAL 9010
+$respuesta['plus_ral'] = number_format($incremento_ral,2,".","");
 // PRECIO TOTAL SIN IVA
-$respuesta['total'] = number_format($respuesta['precio'] + $respuesta['montaje'] + $respuesta['cant_incremento_descuento'] + $plus_cream_stone + $plus_grey_stone + $respuesta['plus_dark_grey'],2,".","");
+$respuesta['total'] = number_format($respuesta['precio'] + $respuesta['montaje'] + $respuesta['cant_incremento_descuento'] + $plus_cream_stone + $plus_grey_stone + $respuesta['plus_dark_grey'] + $plus_ral,2,".","");
 // IVA CORRESPONDIENTE AL PRECIO TOTAL
 $respuesta['iva'] = number_format(round($respuesta['total'] * $_SESSION['iva'] / 100, 2),2,".","");;
 // PRECIO PARA EL DISTRIBUIDOR CON SU DESCUENTO, PARA LAS CERÁMICAS NO SE APLICA DESCUENTO

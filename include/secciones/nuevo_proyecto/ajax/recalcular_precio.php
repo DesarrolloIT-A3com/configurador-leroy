@@ -151,7 +151,8 @@ $plus_cream_stone = 0;
 if (isset($_POST['plus_cream_stone']) && $_POST['plus_cream_stone'] > 0)									$plus_cream_stone = (int)$_POST['plus_cream_stone'];
 $plus_dark_grey = 0;
 if (isset($_POST['plus_dark_grey']) && $_POST['plus_dark_grey'] > 0)									$plus_dark_grey = (int)$_POST['plus_dark_grey'];
-
+$plus_ral = 0;
+if(isset($_POST['plus_ral']) && $_POST['plus_ral'] > 0)				$plus_ral = (int)$_POST['plus_ral'];
 
 $pvp = $db->getVar('SELECT porcentaje FROM tarifa WHERE id = '.$tarifa);
 
@@ -499,6 +500,15 @@ if ($albanileria_costado_pladur > 0) {
 	$precio_albanileria_costado_pladur = 0;
 }
 
+$incremento_ral = 0;
+
+if($plus_ral == 1)
+{
+	$valor_incremento = 20 / 100;
+	$incremento_ral = ($precio_frente + $cant_inc_desc_frente) * $valor_incremento;	
+}
+
+
 $respuesta = array();
 $respuesta['ancho_led'] = $medidas_ancho;
 // PRECIO DEL FRENTE
@@ -511,6 +521,8 @@ $respuesta['plus_grey_stone'] = number_format($plus_grey_stone, 2, ".", "");
 $respuesta['plus_cream_stone'] = number_format($plus_cream_stone, 2, ".", "");
 // PLUS DARK GREY
 $respuesta['plus_dark_grey'] = number_format($plus_dark_grey + $plus_dark_grey * $pvp / 100, 2, ".", "");
+// PLUS BLANCO RAL 9010
+$respuesta['plus_ral'] = number_format($incremento_ral,2,".","");
 // PRECIO DE LAS CERÁMICAS SI TIENE
 $respuesta['ceramicas'] = number_format($precio_ceramica, 2, ".", "");
 // PRECIO DEL INTERIOR
@@ -626,7 +638,7 @@ $respuesta['precio_montaje'] = number_format($montaje, 2, ".", "");
 
 
 // PRECIO TOTAL SIN IVA Y SIN DESCUENTO
-$respuesta['total'] = number_format($respuesta['precio_frente'] + $respuesta['cant_incremento_descuento'] + $plus_cream_stone + $plus_grey_stone + $respuesta['precio_modulos_interior'] + $respuesta["precio_montaje"] +  $respuesta['precio_accesorios_interior'] + $respuesta['cant_incremento_descuento_interior'] + $respuesta['precio_costados'] + $respuesta['precio_fijos'] + $respuesta['precio_desmontaje_frente'] + $respuesta['precio_desmontaje_interior'] + /*$respuesta['precio_desmontaje']*/ + $respuesta['precio_juego_led'] + $respuesta['precio_rematar_frente'] + $respuesta['precio_rematar_interior'] + $respuesta['precio_sistema_frenos'] + $respuesta['precio_herrajes_negros'] + $respuesta["precio_multitaladro"] + $respuesta['precio_espejo_extraible'] + $respuesta['precio_espejo_con_carril'] + $respuesta['precio_baldas_inclinadas'] + $respuesta['precio_remate_interior'] + $respuesta['precio_regleta_led'] + $respuesta['precio_leds_incrustados'] + $respuesta['precio_frente_abuardillado'] + $respuesta['precio_frente_chaflan'] + $respuesta["precio_recrecer_frente"] + $respuesta["precio_kit_plegable"] + $respuesta["precio_tirador_cubo"] + $respuesta["precio_tirador_disc"] + $respuesta["precio_tirador_conic"] + $respuesta["precio_tirador_line"] + $respuesta["precio_unero_rebajado"] + $respuesta["precio_unero_color_madera"] + $respuesta['precio_albanileria_con'] + $respuesta['precio_albanileria_sin'] + $respuesta['precio_km_medicion'] + $respuesta['precio_km_montaje'] + $respuesta['precio_extras_1'] + $respuesta['precio_extras_2'] + $respuesta['precio_extras_3'] + $respuesta['precio_extras_4'] + $respuesta['precio_extras_5'] + $respuesta['precio_extras_6'] + $respuesta['precio_extras_7'] + $respuesta['precio_extras_8'] + $respuesta['precio_extras_9'] + $respuesta['precio_albanileria_sencilla'] + $respuesta['precio_albanileria_tirar_tabique'] + $respuesta['precio_albanileria_quitar_solera'] + $respuesta['precio_albanileria_mover_enchufe'] + $respuesta['precio_albanileria_costado_pladur'], 2, ".", "");
+$respuesta['total'] = number_format($respuesta['precio_frente'] + $respuesta['cant_incremento_descuento'] + $plus_cream_stone + $plus_grey_stone + $plus_dark_grey + $plus_ral + $respuesta['precio_modulos_interior'] + $respuesta["precio_montaje"] +  $respuesta['precio_accesorios_interior'] + $respuesta['cant_incremento_descuento_interior'] + $respuesta['precio_costados'] + $respuesta['precio_fijos'] + $respuesta['precio_desmontaje_frente'] + $respuesta['precio_desmontaje_interior'] + /*$respuesta['precio_desmontaje']*/ + $respuesta['precio_juego_led'] + $respuesta['precio_rematar_frente'] + $respuesta['precio_rematar_interior'] + $respuesta['precio_sistema_frenos'] + $respuesta['precio_herrajes_negros'] + $respuesta["precio_multitaladro"] + $respuesta['precio_espejo_extraible'] + $respuesta['precio_espejo_con_carril'] + $respuesta['precio_baldas_inclinadas'] + $respuesta['precio_remate_interior'] + $respuesta['precio_regleta_led'] + $respuesta['precio_leds_incrustados'] + $respuesta['precio_frente_abuardillado'] + $respuesta['precio_frente_chaflan'] + $respuesta["precio_recrecer_frente"] + $respuesta["precio_kit_plegable"] + $respuesta["precio_tirador_cubo"] + $respuesta["precio_tirador_disc"] + $respuesta["precio_tirador_conic"] + $respuesta["precio_tirador_line"] + $respuesta["precio_unero_rebajado"] + $respuesta["precio_unero_color_madera"] + $respuesta['precio_albanileria_con'] + $respuesta['precio_albanileria_sin'] + $respuesta['precio_km_medicion'] + $respuesta['precio_km_montaje'] + $respuesta['precio_extras_1'] + $respuesta['precio_extras_2'] + $respuesta['precio_extras_3'] + $respuesta['precio_extras_4'] + $respuesta['precio_extras_5'] + $respuesta['precio_extras_6'] + $respuesta['precio_extras_7'] + $respuesta['precio_extras_8'] + $respuesta['precio_extras_9'] + $respuesta['precio_albanileria_sencilla'] + $respuesta['precio_albanileria_tirar_tabique'] + $respuesta['precio_albanileria_quitar_solera'] + $respuesta['precio_albanileria_mover_enchufe'] + $respuesta['precio_albanileria_costado_pladur'], 2, ".", "");
 // IVA CORRESPONDIENTE AL PRECIO TOTAL
 $respuesta['iva'] = number_format(round($respuesta['total'] * $_SESSION['iva'] / 100, 2), 2, ".", "");
 // PRECIO PARA EL DISTRIBUIDOR CON SU DESCUENTO PARA FRENTE, INTERIOR, TAPETAS Y LATERALES

@@ -2175,6 +2175,7 @@ function calcular_precio_frente() {
   var ceramica_8 = $("#ceramica_puerta_8").val();
   var plus_cream_stone = 0;
   var plus_grey_stone = 0;
+  var plus_ral = 0;
   var plus_dark_grey = 0;
 
   for(var i = 1; i <= puertas; i++)
@@ -2205,6 +2206,10 @@ function calcular_precio_frente() {
         {
           plus_grey_stone += 20;
           foundGreyStone = true; // Marcamos que ya encontramos Grey Stone en esta puerta
+        }
+        if(color == "Blanco RAL 9010")
+        {
+          plus_ral = 1;
         }
 
         var terminacion = $("#diseno_puerta_"+i).val().split("-")[1];
@@ -2259,7 +2264,8 @@ function calcular_precio_frente() {
       ceramica_8: ceramica_8,
       plus_cream_stone: plus_cream_stone,
       plus_grey_stone: plus_grey_stone,
-      plus_dark_grey: plus_dark_grey
+      plus_dark_grey: plus_dark_grey,
+      plus_ral: plus_ral
     },
     function (data) {
       $(".txt_resumen.precio").html(
@@ -2330,14 +2336,28 @@ function calcular_precio_frente() {
         );
       }
 
-      if (data.ceramicas > 0) {
+      if(data.plus_ral > 0)
+      {
         $(".txt_resumen.precio .plus_dark_grey").after(
+          '<div class="plus_ral">Incremento Blanco RAL 9010 (20%): <span>' +
+            data.plus_ral +"€</span></div>"
+        );
+      }
+      else
+      {
+        $(".txt_resumen.precio .plus_dark_grey").after(
+          '<div class="plus_ral"></div>'
+        );
+      }
+
+      if (data.ceramicas > 0) {
+        $(".txt_resumen.precio .plus_ral").after(
           '<div class="ceramicas">Precio cerámica: <span>' +
             data.ceramicas +
             "€</span></div>"
         );
       } else {
-        $(".txt_resumen.precio .plus_dark_grey").after(
+        $(".txt_resumen.precio .plus_ral").after(
           '<div class="ceramicas"></div>'
         );
       }
@@ -3051,6 +3071,7 @@ function calcular_precio_interior() {
   var plus_cream_stone = 0;
   var plus_grey_stone = 0;
   var plus_dark_grey = 0;
+  var plus_ral = 0;
 
 
   for(var i = 1; i <= puertas; i++)
@@ -3081,6 +3102,10 @@ function calcular_precio_interior() {
         {
           plus_grey_stone += 20;
           foundGreyStone = true; // Marcamos que ya encontramos Grey Stone en esta puerta
+        }
+        if(color == "Blanco RAL 9010")
+        {
+          plus_ral = 1;
         }
 
         var terminacion = $("#diseno_puerta_"+i).val().split("-")[1];
@@ -3177,7 +3202,8 @@ function calcular_precio_interior() {
       precio_ceramica: precio_ceramica,
       plus_cream_stone: plus_cream_stone,
       plus_grey_stone: plus_grey_stone,
-      plus_dark_grey: plus_dark_grey
+      plus_dark_grey: plus_dark_grey,
+      plus_ral: plus_ral
     },
     function (data) {
       $(".txt_resumen.precio").html(
@@ -3242,16 +3268,30 @@ function calcular_precio_interior() {
         );
       }
 
+      if(data.plus_ral > 0)
+      {
+        $(".txt_resumen.precio .plus_dark_grey").after(
+          '<div class="plus_ral">Incremento Blanco RAL 9010 (20%): <span>' +
+            data.plus_ral +"€</span></div>"
+        );
+      }
+      else
+      {
+        $(".txt_resumen.precio .plus_dark_grey").after(
+          '<div class="plus_ral"></div>'
+        );
+      }
+
 
       if (data.precio_modulos_interior > 0) {
-        $(".txt_resumen.precio .plus_dark_grey").after(
+        $(".txt_resumen.precio .plus_ral").after(
           '<div class="precio_modulos_interior">Precio interior: <span>' +
             data.precio_modulos_interior +
             "€</span></div>"
         );
         $("#precio_modulos_interior").val(data.precio_modulos_interior);
       } else {
-        $(".txt_resumen.precio .plus_dark_grey").after(
+        $(".txt_resumen.precio .plus_ral").after(
           '<div class="precio_modulos_interior"></div>'
         );
       }
@@ -3834,6 +3874,7 @@ function recalcular_precio() {
   var plus_cream_stone = 0;
   var plus_grey_stone = 0;
   var plus_dark_grey = 0;
+  var plus_ral = 0;
 
   for(var i = 1; i <= num_puertas; i++)
   {
@@ -3863,6 +3904,10 @@ function recalcular_precio() {
         {
           plus_grey_stone += 20;
           foundGreyStone = true; // Marcamos que ya encontramos Grey Stone en esta puerta
+        }
+         if(color == "Blanco RAL 9010")
+        {
+          plus_ral = 1;
         }
        var terminacion = $("#diseno_puerta_"+i).val().split("-")[1];
 
@@ -4014,7 +4059,8 @@ function recalcular_precio() {
       albanileria_costado_pladur: albanileria_costado_pladur,
       plus_cream_stone: plus_cream_stone,
       plus_grey_stone: plus_grey_stone,
-      plus_dark_grey: plus_dark_grey
+      plus_dark_grey: plus_dark_grey,
+      plus_ral: plus_ral
     },
     function (data) {
 
@@ -4080,15 +4126,29 @@ function recalcular_precio() {
         );
       }
 
-      if (data.precio_modulos_interior > 0) {
+      if(data.plus_ral > 0)
+      {
         $(".txt_resumen.precio .plus_dark_grey").after(
+          '<div class="plus_ral">Incremento Blanco RAL 9010 (20%): <span>' +
+            data.plus_ral +"€</span></div>"
+        );
+      }
+      else
+      {
+        $(".txt_resumen.precio .plus_dark_grey").after(
+          '<div class="plus_ral"></div>'
+        );
+      }
+
+      if (data.precio_modulos_interior > 0) {
+        $(".txt_resumen.precio .plus_ral").after(
           '<div class="precio_modulos_interior">Precio interior: <span>' +
             data.precio_modulos_interior +
             "€</span></div>"
         );
         $("#precio_modulos_interior").val(data.precio_modulos_interior);
       } else {
-        $(".txt_resumen.precio .plus_dark_grey").after(
+        $(".txt_resumen.precio .plus_ral").after(
           '<div class="precio_modulos_interior"></div>'
         );
       }
