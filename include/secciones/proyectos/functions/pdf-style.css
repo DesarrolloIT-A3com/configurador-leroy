@@ -1,0 +1,69 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i|Roboto:300,300i,400,400i,700,700i');
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+    display: block;
+}
+
+* {
+    margin: 0;
+    padding: 0
+}
+
+html,
+body {
+    font-family: 'Roboto', Arial, sans-serif;
+    font-size: 14px;
+    background-color: #ffffff;
+    width: 100%;
+    margin: 0 auto;
+    height: 100%;
+    color: #444444;
+    background-position: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.fila_proyecto {
+    float: left;
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+.fila_proyecto_precio{
+    width: fit-content;
+    float:right;
+}
+
+h2 {
+    font-family: 'Roboto Condensed', Arial, sans-serif;
+    color: #444444;
+    border-bottom: 1px solid #dddddd;
+    margin-bottom: 6px;
+    font-size: 18px;
+}
+
+.item_diseno_puertas h3 {
+    font-family: 'Roboto Condensed', Arial, sans-serif;
+    color: #444444;
+    border-bottom: 1px solid #dddddd;
+    margin-bottom: 6px;
+    font-size: 16px;
+}
+
+.item_fila_proyecto_datos_interior h4 {
+    font-family: 'Roboto Condensed', Arial, sans-serif;
+    color: #444444;
+    border-bottom: 1px solid #dddddd;
+    margin-bottom: 6px;
+    font-size: 16px;
+}
