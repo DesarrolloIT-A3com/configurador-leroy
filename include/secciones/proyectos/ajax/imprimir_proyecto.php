@@ -3,9 +3,11 @@
 if (!isset($_SESSION['logueado']) || $_SESSION['logueado'] != "logged")
 	die();
 
+require_once "include/secciones/proyectos/functions/data_armarios.php";
+
 $distribuidor = $db->getRow('SELECT um.nombre, um.cif, um.direccion, um.poblacion, um.cp, um.provincia, um.email, um.telefono FROM usuarios_mod as um, usuarios as u WHERE um.id=u.id_usuarios_mod AND u.id=' . $_SESSION['id_usuario']);
 
-$proyecto = $db->getRow('SELECT id_usuario, id_tarifa, descuento, id_serie, id_acabado, id_color_perfileria, ancho, alto, fondo, num_puertas, diseno_puerta_1, diseno_puerta_2, diseno_puerta_3, diseno_puerta_4, diseno_puerta_5, diseno_puerta_6, diseno_puerta_7, diseno_puerta_8, ceramica_puerta_1, ceramica_puerta_2, ceramica_puerta_3, ceramica_puerta_4, ceramica_puerta_5, ceramica_puerta_6, ceramica_puerta_7, ceramica_puerta_8, colores_puerta_1, colores_puerta_2, colores_puerta_3, colores_puerta_4, colores_puerta_5, colores_puerta_6, colores_puerta_7, colores_puerta_8, num_modulos_interior, interior_puerta_1, interior_puerta_2, interior_puerta_3, interior_puerta_4, interior_puerta_5, interior_puerta_6, interior_puerta_7, interior_puerta_8, laterales_seleccionado, tapetas_seleccionado, costados_seleccionado, fijos_seleccionado, montaje_frente_seleccionado, montaje_interior_seleccionado, desmontaje_frente_seleccionado, desmontaje_interior_seleccionado, juego_led_seleccionado, rematar_frente_seleccionado, rematar_interior_seleccionado, montaje_frente_arjomy_seleccionado, montaje_interior_arjomy_seleccionado, desmontaje_frente_arjomy_seleccionado, desmontaje_interior_arjomy_seleccionado, juego_led_arjomy_seleccionado, rematar_frente_arjomy_seleccionado, sistema_frenos_seleccionado, regleta_led_seleccionado, frente_abuardillado_seleccionado, albanileria_con_seleccionado, albanileria_sin_seleccionado, precio_frente, inc_desc_frente, cant_inc_desc_frente, precio_ceramica, precio_modulos_interior, precio_accesorios_interior, inc_desc_interior, cant_inc_desc_interior, precio_tapetas, precio_laterales, precio_costados, precio_fijos, precio_montaje_frente, precio_montaje_interior, precio_desmontaje_frente, precio_desmontaje_interior, precio_juego_led, precio_rematar_frente, precio_rematar_interior, precio_sistema_frenos, precio_regleta_led, precio_frente_abuardillado, precio_albanileria_con, precio_albanileria_sin, precio_costados_dist, precio_fijos_dist, precio_montaje_frente_dist, precio_montaje_interior_dist, precio_desmontaje_frente_dist, precio_desmontaje_interior_dist, precio_juego_led_dist, precio_rematar_frente_dist, precio_sistema_frenos_dist, aplicar_descuento, descuento_cliente, porcentaje_iva, iva, precio_total, observaciones, nombre_cliente, dni_cliente, direccion_cliente, poblacion_cliente, cp_cliente, provincia_cliente, telefono_cliente, email_cliente, horario_cliente, fecha_proyecto, precio_km_medicion, precio_km_montaje, precio_extras_1, precio_extras_2, precio_extras_3, precio_extras_4, precio_extras_5, precio_extras_6, precio_extras_7, precio_extras_8, precio_extras_9, precio_extras_10, precio_extras_11, precio_extras_12, precio_extras_13, precio_desmontaje, precio_albanileria_sencilla, precio_albanileria_tirar_tabique, precio_albanileria_quitar_solera, precio_albanileria_mover_enchufe, precio_albanileria_costado_pladur FROM proyectos WHERE id_usuario=' . $_SESSION['id_usuario'] . ' AND id=' . $id . ' AND eliminado=0');
+$proyecto = $db->getRow('SELECT id_usuario, id_tarifa, descuento, id_serie, id_acabado, id_color_perfileria, ancho, alto, fondo, num_puertas, diseno_puerta_1, diseno_puerta_2, diseno_puerta_3, diseno_puerta_4, diseno_puerta_5, diseno_puerta_6, diseno_puerta_7, diseno_puerta_8, ceramica_puerta_1, ceramica_puerta_2, ceramica_puerta_3, ceramica_puerta_4, ceramica_puerta_5, ceramica_puerta_6, ceramica_puerta_7, ceramica_puerta_8, colores_puerta_1, colores_puerta_2, colores_puerta_3, colores_puerta_4, colores_puerta_5, colores_puerta_6, colores_puerta_7, colores_puerta_8, num_modulos_interior, interior_puerta_1, interior_puerta_2, interior_puerta_3, interior_puerta_4, interior_puerta_5, interior_puerta_6, interior_puerta_7, interior_puerta_8, laterales_seleccionado, tapetas_seleccionado, costados_seleccionado, fijos_seleccionado, montaje_frente_seleccionado, montaje_interior_seleccionado, desmontaje_frente_seleccionado, desmontaje_interior_seleccionado, juego_led_seleccionado, rematar_frente_seleccionado, rematar_interior_seleccionado, montaje_frente_arjomy_seleccionado, montaje_interior_arjomy_seleccionado, desmontaje_frente_arjomy_seleccionado, desmontaje_interior_arjomy_seleccionado, juego_led_arjomy_seleccionado, rematar_frente_arjomy_seleccionado, sistema_frenos_seleccionado, regleta_led_seleccionado, frente_abuardillado_seleccionado, albanileria_con_seleccionado, albanileria_sin_seleccionado, precio_frente, inc_desc_frente, cant_inc_desc_frente, precio_ceramica, precio_modulos_interior, precio_accesorios_interior, inc_desc_interior, cant_inc_desc_interior, precio_tapetas, precio_laterales, precio_costados, precio_fijos, precio_montaje_frente, precio_montaje_interior, precio_desmontaje_frente, precio_desmontaje_interior, precio_juego_led, precio_rematar_frente, precio_rematar_interior, precio_sistema_frenos, precio_regleta_led, precio_frente_abuardillado, precio_albanileria_con, precio_albanileria_sin, precio_costados_dist, precio_fijos_dist, precio_montaje_frente_dist, precio_montaje_interior_dist, precio_desmontaje_frente_dist, precio_desmontaje_interior_dist, precio_juego_led_dist, precio_rematar_frente_dist, precio_sistema_frenos_dist, aplicar_descuento, descuento_cliente, porcentaje_iva, iva, precio_total, observaciones, nombre_cliente, dni_cliente, direccion_cliente, poblacion_cliente, cp_cliente, provincia_cliente, telefono_cliente, email_cliente, horario_cliente, fecha_proyecto, precio_km_medicion, precio_km_montaje, precio_extras_1, precio_extras_2, precio_extras_3, precio_extras_4, precio_extras_5, precio_extras_6, precio_extras_7, precio_extras_8, precio_extras_9, precio_extras_10, precio_extras_11, precio_extras_12, precio_extras_13, precio_desmontaje, precio_albanileria_sencilla, precio_albanileria_tirar_tabique, precio_albanileria_quitar_solera, precio_albanileria_mover_enchufe, precio_albanileria_costado_pladur,leds_incrustados,herrajes_negros,multitaladro,espejo_extraible,espejo_carril,baldas_inclinadas,kit_plegable,recrecer_frente FROM proyectos WHERE id_usuario=' . $_SESSION['id_usuario'] . ' AND id=' . $id . ' AND eliminado=0');
 
 $diseno_puerta_1 = explode("-", $proyecto['diseno_puerta_1']);
 $diseno_puerta_2 = explode("-", $proyecto['diseno_puerta_2']);
@@ -35,6 +37,32 @@ $interior_puerta_8 = explode("-", $proyecto['interior_puerta_8']);
 $serie = $db->getVar('SELECT nombre FROM series WHERE id=' . $proyecto['id_serie']);
 $acabado = $db->getVar('SELECT nombre FROM acabados WHERE id=' . $proyecto['id_acabado']);
 $perfileria = $db->getRow('SELECT nombre, imagen FROM colores WHERE id=' . $proyecto['id_color_perfileria']);
+$tarifa = $db->getVar('SELECT porcentaje FROM tarifa WHERE id='.$proyecto['id_tarifa']);
+
+
+
+$result_puertas = extractColorPuerta($db,$proyecto['num_puertas'],$proyecto);
+
+$plus_cream_stone = $result_puertas['cream_stone'];
+$plus_grey_stone = $result_puertas['grey_stone'];
+$plus_dark_grey = $result_puertas['dark_grey'];
+
+$plus_dark_grey = $plus_dark_grey + (($plus_dark_grey*$tarifa) / 100);
+
+if($proyecto['num_modulos_interior'] > 0)
+{
+	$modulos_dobles = $proyecto['num_puertas'] - $proyecto['num_modulos_interior'];
+	$modulos_simples = $proyecto['num_modulos_interior'] - $modulos_dobles;
+
+	$res_dobles = extractColorInterior($modulos_dobles,$db);
+	$plus_cream_stone+=$res_dobles['cream_stone'];
+	$plus_grey_stone+=$res_dobles['grey_stone'];
+
+	$res_simples = extractColorInterior($modulos_simples,$db);
+	$plus_cream_stone+=$res_simples['cream_stone'];
+	$plus_grey_stone+=$res_simples['grey_stone'];
+}
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -85,6 +113,11 @@ $perfileria = $db->getRow('SELECT nombre, imagen FROM colores WHERE id=' . $proy
 			float: left;
 			width: 100%;
 			margin-bottom: 30px;
+		}
+
+		.fila_proyecto_precio{
+			width: fit-content;
+			float:right;
 		}
 
 		h2 {
@@ -502,267 +535,409 @@ $perfileria = $db->getRow('SELECT nombre, imagen FROM colores WHERE id=' . $proy
 		</div>
 
 		<?php
-		if ($proyecto['sistema_frenos_seleccionado'] > 0 || $proyecto['tapetas_seleccionado'] > 0 || $proyecto['laterales_seleccionado'] > 0 || $proyecto['costados_seleccionado'] > 0 || $proyecto['fijos_seleccionado'] > 0 || $proyecto['regleta_led_seleccionado'] > 0 || $proyecto['frente_abuardillado_seleccionado'] > 0 || $proyecto['montaje_frente_seleccionado'] > 0 || $proyecto['rematar_frente_seleccionado'] > 0 || $proyecto['rematar_interior_seleccionado'] > 0 || $proyecto['juego_led_seleccionado'] > 0 || $proyecto['montaje_interior_seleccionado'] > 0 || $proyecto['desmontaje_frente_seleccionado'] > 0 || $proyecto['desmontaje_interior_seleccionado'] > 0 || $proyecto['albanileria_con_seleccionado'] > 0 || $proyecto['albanileria_sin_seleccionado'] > 0) {
-		?>
-			<div class="fila_proyecto">
-				<h2>Extras</h2>
-				<?php
-				if ($proyecto['sistema_frenos_seleccionado'] > 0 || $proyecto['tapetas_seleccionado'] > 0 || $proyecto['laterales_seleccionado'] > 0 || $proyecto['costados_seleccionado'] > 0 || $proyecto['fijos_seleccionado'] > 0 || $proyecto['regleta_led_seleccionado'] > 0 || $proyecto['frente_abuardillado_seleccionado'] > 0 || $proyecto['montaje_frente_seleccionado'] > 0 || $proyecto['rematar_frente_seleccionado'] > 0) {
-				?>
+			if (
+				$proyecto['sistema_frenos_seleccionado'] > 0 || $proyecto['tapetas_seleccionado'] > 0 || $proyecto['laterales_seleccionado'] > 0 || $proyecto['costados_seleccionado'] > 0 || $proyecto['fijos_seleccionado'] > 0 || $proyecto['regleta_led_seleccionado'] > 0 || $proyecto['frente_abuardillado_seleccionado'] > 0 || $proyecto['montaje_frente_seleccionado'] > 0 || $proyecto['rematar_frente_seleccionado'] > 0 || $proyecto['rematar_interior_seleccionado'] > 0 || $proyecto['juego_led_seleccionado'] > 0 || $proyecto['montaje_interior_seleccionado'] > 0 || $proyecto['desmontaje_frente_seleccionado'] > 0 || $proyecto['desmontaje_interior_seleccionado'] > 0 || $proyecto['albanileria_con_seleccionado'] > 0 || $proyecto['albanileria_sin_seleccionado'] > 0 ||
+				$proyecto['precio_extras_1'] > 0 || $proyecto['precio_extras_2'] > 0 || $proyecto['precio_extras_3'] > 0 || $proyecto['precio_extras_4'] > 0 || $proyecto['precio_extras_5'] > 0 || $proyecto['precio_extras_6'] > 0 || $proyecto['precio_extras_7'] > 0 || $proyecto['precio_extras_8'] > 0 || $proyecto['precio_extras_9'] > 0 || $proyecto['precio_extras_10'] > 0 || $proyecto['precio_extras_11'] > 0 || $proyecto['precio_extras_12'] > 0 || $proyecto['precio_extras_13'] > 0 || $proyecto['precio_albanileria_sencilla'] || $proyecto['precio_albanileria_tirar_tabique'] || $proyecto['precio_albanileria_quitar_solera'] || $proyecto['precio_albanileria_mover_enchufe'] || $proyecto['precio_albanileria_costado_pladur'] || 
+				$proyecto['leds_incrustados'] > 0 || $proyecto['herrajes_negros'] > 0 || $proyecto['multitaladro'] > 0 || $proyecto['espejo_extraible'] > 0 || $proyecto['espejo_carril'] > 0 || $proyecto['baldas_inclinadas'] > 0 || $proyecto['kit_plegable'] > 0 || $proyecto['recrecer_frente'] > 0
+			){
+			?>
+				<div class="fila_proyecto">
+					<h2>Extras</h2>
+					<?php
+					if ($proyecto['sistema_frenos_seleccionado'] > 0 || $proyecto['tapetas_seleccionado'] > 0 || $proyecto['laterales_seleccionado'] > 0 || $proyecto['costados_seleccionado'] > 0 || $proyecto['fijos_seleccionado'] > 0 || $proyecto['regleta_led_seleccionado'] > 0 || $proyecto['frente_abuardillado_seleccionado'] > 0 || $proyecto['montaje_frente_seleccionado'] > 0 || $proyecto['rematar_frente_seleccionado'] > 0) {
+					?>
+						<div class="item_fila_proyecto_otros">
+							<h3>Frente</h3>
+						</div>
+						<?php if ($proyecto['tapetas_seleccionado'] > 0) { ?>
+							<div class="item_fila_proyecto_otros">
+								<?php $tapetas = $db->getVar('SELECT nombre FROM tapetas WHERE id=' . $proyecto['tapetas_seleccionado']); ?>
+								<i class="fa fa-check"></i> Juego de <?php echo $tapetas; ?>
+							</div>
+						<?php } ?>
+						<?php if ($proyecto['laterales_seleccionado'] > 0) { ?>
+							<div class="item_fila_proyecto_otros">
+								<?php $laterales = $db->getVar('SELECT nombre FROM laterales WHERE id=' . $proyecto['laterales_seleccionado']); ?>
+								<i class="fa fa-check"></i> Juego de <?php echo $laterales; ?>
+							</div>
+						<?php } ?>
+						<?php if ($proyecto['sistema_frenos_seleccionado'] > 0) { ?>
+							<div class="item_fila_proyecto_otros">
+								<i class="fa fa-check"></i> Sistema de frenos para puertas
+							</div>
+						<?php } ?>
+						<?php if ($proyecto['costados_seleccionado'] > 0) { ?>
+							<div class="item_fila_proyecto_otros">
+								<?php $costados = $db->getVar('SELECT nombre FROM costados WHERE id=' . $proyecto['costados_seleccionado']); ?>
+								<i class="fa fa-check"></i> <?php echo $costados; ?>
+							</div>
+						<?php } ?>
+						<?php if ($proyecto['fijos_seleccionado'] > 0) { ?>
+							<div class="item_fila_proyecto_otros">
+								<?php $costados = $db->getVar('SELECT nombre FROM fijos WHERE id=' . $proyecto['fijos_seleccionado']); ?>
+								<i class="fa fa-check"></i> Fijos en <?php echo $costados; ?>
+							</div>
+						<?php } ?>
+						<?php if ($proyecto['regleta_led_seleccionado'] > 0) { ?>
+							<div class="item_fila_proyecto_otros">
+								<i class="fa fa-check"></i> Regletas led para puertas
+							</div>
+						<?php } ?>
+						<?php if ($proyecto['frente_abuardillado_seleccionado'] > 0) { ?>
+							<div class="item_fila_proyecto_otros">
+								<i class="fa fa-check"></i> Frente abuardillado
+							</div>
+						<?php } ?>
+						<?php if ($proyecto['montaje_frente_seleccionado'] > 0) { ?>
+							<div class="item_fila_proyecto_otros">
+								<i class="fa fa-check"></i> Montaje de frente de <?php echo $proyecto['montaje_frente_seleccionado']; ?> hojas
+							</div>
+						<?php } ?>
+						<?php if ($proyecto['rematar_frente_seleccionado'] > 0) { ?>
+							<div class="item_fila_proyecto_otros">
+								<i class="fa fa-check"></i> Remate de frente
+							</div>
+						<?php } ?>
+					<?php } ?>
+					<?php
+					if ($proyecto['juego_led_seleccionado'] > 0 || $proyecto['montaje_interior_seleccionado'] > 0 || $proyecto['rematar_interior_seleccionado'] > 0) {
+					?>
+						<div class="item_fila_proyecto_otros">
+							<h3>Interior</h3>
+						</div>
+						<?php if ($proyecto['juego_led_seleccionado'] > 0) { ?>
+							<div class="item_fila_proyecto_otros">
+								<i class="fa fa-check"></i> Juego de led interior
+							</div>
+						<?php } ?>
+						<?php if ($proyecto['montaje_interior_seleccionado'] > 0) { ?>
+							<div class="item_fila_proyecto_otros">
+								<i class="fa fa-check"></i> Montaje de interior de <?php echo $proyecto['montaje_interior_seleccionado']; ?> módulos
+							</div>
+						<?php } ?>
+						<?php if ($proyecto['rematar_interior_seleccionado'] > 0) { ?>
+							<div class="item_fila_proyecto_otros">
+								<i class="fa fa-check"></i> Remate de interior
+							</div>
+						<?php } ?>
+					<?php } ?>
+					<?php
+					if ($proyecto['albanileria_con_seleccionado'] > 0 || $proyecto['albanileria_sin_seleccionado'] > 0 || $proyecto['precio_albanileria_sencilla'] || $proyecto['precio_albanileria_tirar_tabique'] || $proyecto['precio_albanileria_quitar_solera'] || $proyecto['precio_albanileria_mover_enchufe'] || $proyecto['precio_albanileria_costado_pladur']) {
+					?>
+						<div class="item_fila_proyecto_otros">
+							<h3>Albañilería</h3>
+						</div>
+						<?php if ($proyecto['precio_albanileria_sencilla'] > 0) { ?>
+							<div class="item_fila_proyecto_otros">
+								<i class="fa fa-check"></i> Albanileria sencilla
+							</div>
+						<?php } ?>
+						<?php if ($proyecto['precio_albanileria_tirar_tabique'] > 0) { ?>
+							<div class="item_fila_proyecto_otros">
+								<i class="fa fa-check"></i> Tirar tabique o maletero
+							</div>
+						<?php } ?>
+						<?php if ($proyecto['precio_albanileria_quitar_solera'] > 0) { ?>
+							<div class="item_fila_proyecto_otros">
+								<i class="fa fa-check"></i> Quitar solera
+							</div>
+						<?php } ?>
+						<?php if ($proyecto['precio_albanileria_mover_enchufe'] > 0) { ?>
+							<div class="item_fila_proyecto_otros">
+								<i class="fa fa-check"></i> Mover enchufe o interruptor
+							</div>
+						<?php } ?>
+						<?php if ($proyecto['precio_albanileria_costado_pladur'] > 0) { ?>
+							<div class="item_fila_proyecto_otros">
+								<i class="fa fa-check"></i> Hacer costado de pladur
+							</div>
+						<?php } ?>
+						<?php if ($proyecto['albanileria_con_seleccionado'] > 0) { ?>
+							<div class="item_fila_proyecto_otros">
+								<i class="fa fa-check"></i> Albañilería con solera
+							</div>
+						<?php } ?>
+						<?php if ($proyecto['albanileria_sin_seleccionado'] > 0) { ?>
+							<div class="item_fila_proyecto_otros">
+								<i class="fa fa-check"></i> Albañilería sin solera
+							</div>
+						<?php } ?>
+					<?php } ?>
+					<?php
+					if ($proyecto['desmontaje_frente_seleccionado'] > 0 || $proyecto['desmontaje_interior_seleccionado'] > 0 || $proyecto['precio_extras_1'] > 0 || $proyecto['precio_extras_2'] > 0 || $proyecto['precio_extras_3'] > 0 || $proyecto['precio_extras_4'] > 0 || $proyecto['precio_extras_5'] > 0 || $proyecto['precio_extras_6'] > 0 || $proyecto['precio_extras_7'] > 0 || $proyecto['precio_extras_8'] > 0 || $proyecto['precio_extras_9'] > 0 || $proyecto['precio_extras_10'] > 0 || $proyecto['precio_extras_11'] > 0 || $proyecto['precio_extras_12'] > 0 || $proyecto['precio_extras_13'] > 0 || $proyecto['leds_incrustados'] > 0 || $proyecto['herrajes_negros'] > 0 || $proyecto['multitaladro'] > 0 || $proyecto['espejo_extraible'] > 0 || $proyecto['espejo_carril'] > 0 || $proyecto['baldas_inclinadas'] > 0 || $proyecto['kit_plegable'] > 0 || $proyecto['recrecer_frente'] > 0) {
+					?>
+						<div class="item_fila_proyecto_otros">
+							<h3>Otros</h3>
+						</div>
+						<?php if ($proyecto['desmontaje_frente_seleccionado'] > 0) { ?>
+							<div class="item_fila_proyecto_otros">
+								<?php $desm_frente = $db->getVar('SELECT nombre FROM desmontajes_frentes WHERE id=' . $proyecto['desmontaje_frente_seleccionado']); ?>
+								<i class="fa fa-check"></i> Desmontaje de frente de <?php echo $desm_frente; ?>
+							</div>
+						<?php } ?>
+						<?php if ($proyecto['desmontaje_interior_seleccionado'] > 0) { ?>
+							<div class="item_fila_proyecto_otros">
+								<?php $desm_interior = $db->getVar('SELECT nombre FROM desmontajes_interiores WHERE id=' . $proyecto['desmontaje_interior_seleccionado']); ?>
+								<i class="fa fa-check"></i> Desmontaje de interior de <?php echo $desm_interior; ?>
+							</div>
+						<?php } ?>
+						<?php if ($proyecto['precio_extras_1'] > 0) { ?>
+							<div class="item_fila_proyecto_otros">
+								<i class="fa fa-check"></i> Rematar por dentro
+							</div>
+						<?php } ?>
+						<?php if ($proyecto['precio_extras_2'] > 0) { ?>
+							<div class="item_fila_proyecto_otros">
+								<i class="fa fa-check"></i> Módulo con viga
+							</div>
+						<?php } ?>
+						<?php if ($proyecto['precio_extras_3'] > 0) { ?>
+							<div class="item_fila_proyecto_otros">
+								<i class="fa fa-check"></i> Interior con chaflán
+							</div>
+						<?php } ?>
+						<?php if ($proyecto['precio_extras_4'] > 0) { ?>
+							<div class="item_fila_proyecto_otros">
+								<i class="fa fa-check"></i> Registro
+							</div>
+						<?php } ?>
+						<?php if ($proyecto['precio_extras_5'] > 0) { ?>
+							<div class="item_fila_proyecto_otros">
+								<i class="fa fa-check"></i> Desplazar punto de luz a costado
+							</div>
+						<?php } ?>
+						<?php if ($proyecto['precio_extras_6'] > 0) { ?>
+							<div class="item_fila_proyecto_otros">
+								<i class="fa fa-check"></i> Módulo forrado
+							</div>
+						<?php } ?>
+						<?php if ($proyecto['precio_extras_7'] > 0) { ?>
+							<div class="item_fila_proyecto_otros">
+								<i class="fa fa-check"></i> Módulo diamante
+							</div>
+						<?php } ?>
+						<?php if ($proyecto['precio_extras_8'] > 0) { ?>
+							<div class="item_fila_proyecto_otros">
+								<i class="fa fa-check"></i> Incremento por balda extra
+							</div>
+						<?php } ?>
+						<?php if ($proyecto['precio_extras_9'] > 0) { ?>
+							<div class="item_fila_proyecto_otros">
+								<i class="fa fa-check"></i> Incremento por módulo partido
+							</div>
+						<?php } ?>
+						<?php if ($proyecto['leds_incrustados'] > 0){ ?>
+							<div class="item_fila_proyecto_otros">
+								<i class="fa fa-check"></i> Leds incrustados
+							</div>
+						<?php } ?>
+						<?php if ($proyecto['herrajes_negros'] > 0){ ?>
+							<div class="item_fila_proyecto_otros">
+								<i class="fa fa-check"></i> Herrajes negros
+						<?php } ?>
+						<?php if ($proyecto['multitaladro'] > 0){ ?>
+							<div class="item_fila_proyecto_otros">
+								<i class="fa fa-check"></i> Multitaladro
+						<?php } ?>
+						<?php if ($proyecto['espejo_extraible'] > 0){ ?>
+							<div class="item_fila_proyecto_otros">
+								<i class="fa fa-check"></i> Espejo extraíble
+							</div>
+						<?php } ?>
+						<?php if ($proyecto['espejo_carril'] > 0){ ?>
+							<div class="item_fila_proyecto_otros">
+								<i class="fa fa-check"></i> Espejo carril
+							</div>
+						<?php } ?>
+						<?php if ($proyecto['baldas_inclinadas'] > 0){ ?>
+							<div class="item_fila_proyecto_otros">
+								<i class="fa fa-check"></i> Baldas inclinadas
+							</div>
+						<?php } ?>
+						<?php if ($proyecto['kit_plegable'] > 0){ ?>
+							<div class="item_fila_proyecto_otros">
+								<i class="fa fa-check"></i> Kit plegable
+							</div>
+						<?php } ?>
+						<?php if ($proyecto['recrecer_frente'] > 0){ ?>
+							<div class="item_fila_proyecto_otros">
+								<i class="fa fa-check"></i> Recrecer frente
+							</div>
+						<?php } ?>
+
+			<?php }}?>
+			<?php
+			if ($proyecto['observaciones'] != "") {
+			?>
+				<div class="fila_proyecto">
+					<h2>Observaciones</h2>
 					<div class="item_fila_proyecto_otros">
-						<h3>Frente</h3>
+						<?php echo nl2br($proyecto['observaciones']); ?>
 					</div>
-					<?php if ($proyecto['tapetas_seleccionado'] > 0) { ?>
-						<div class="item_fila_proyecto_otros" style="float: left; width: 100%;">
-							<?php $tapetas = $db->getVar('SELECT nombre FROM tapetas WHERE id=' . $proyecto['tapetas_seleccionado']); ?>
-							<i class="fa fa-check"></i> Juego de <?php echo $tapetas; ?>
-						</div>
+				</div>
+			<?php
+			}
+			?>
+			<div class="fila_proyecto_precio">
+				<h2>Precio</h2>
+				<div class="item_fila_proyecto_precio">
+					Precio frente: <span><?php echo number_format($proyecto['precio_frente'], 2, ".", ""); ?>€</span><br />
+					<?php if ($proyecto['inc_desc_frente'] != "") { ?>
+						<?php echo $proyecto['inc_desc_frente']; ?>: <span><?php echo number_format($proyecto['cant_inc_desc_frente'], 2, ".", ""); ?>€</span><br />
 					<?php } ?>
-					<?php if ($proyecto['laterales_seleccionado'] > 0) { ?>
-						<div class="item_fila_proyecto_otros" style="float: left; width: 100%;">
-							<?php $laterales = $db->getVar('SELECT nombre FROM laterales WHERE id=' . $proyecto['laterales_seleccionado']); ?>
-							<i class="fa fa-check"></i> Juego de <?php echo $laterales; ?>
-						</div>
+					<?php if ($proyecto['precio_modulos_interior'] > 0) { ?>
+						Precio interior: <span><?php echo number_format($proyecto['precio_modulos_interior'], 2, ".", ""); ?>€</span><br />
 					<?php } ?>
-					<?php if ($proyecto['sistema_frenos_seleccionado'] > 0) { ?>
-						<div class="item_fila_proyecto_otros" style="float: left; width: 100%;">
-							<i class="fa fa-check"></i> Sistema de frenos para puertas
-						</div>
+					<?php if ($proyecto['inc_desc_interior'] != "") { ?>
+						<?php echo $proyecto['inc_desc_interior']; ?>: <span><?php echo number_format($proyecto['cant_inc_desc_interior'], 2, ".", ""); ?>€</span><br />
 					<?php } ?>
-					<?php if ($proyecto['costados_seleccionado'] > 0) { ?>
-						<div class="item_fila_proyecto_otros" style="float: left; width: 100%;">
-							<?php $costados = $db->getVar('SELECT nombre FROM costados WHERE id=' . $proyecto['costados_seleccionado']); ?>
-							<i class="fa fa-check"></i> <?php echo $costados; ?>
-						</div>
+					<?php if ($proyecto['precio_tapetas'] > 0) { ?>
+						Precio tapetas: <span><?php echo number_format($proyecto['precio_tapetas'], 2, ".", ""); ?>€</span><br />
 					<?php } ?>
-					<?php if ($proyecto['fijos_seleccionado'] > 0) { ?>
-						<div class="item_fila_proyecto_otros" style="float: left; width: 100%;">
-							<?php $costados = $db->getVar('SELECT nombre FROM fijos WHERE id=' . $proyecto['fijos_seleccionado']); ?>
-							<i class="fa fa-check"></i> Fijos en <?php echo $costados; ?>
-						</div>
+					<?php if ($proyecto['precio_laterales'] > 0) { ?>
+						Precio laterales: <span><?php echo number_format($proyecto['precio_laterales'], 2, ".", ""); ?>€</span><br />
 					<?php } ?>
-					<?php if ($proyecto['regleta_led_seleccionado'] > 0) { ?>
-						<div class="item_fila_proyecto_otros" style="float: left; width: 100%;">
-							<i class="fa fa-check"></i> Regletas led para puertas
-						</div>
+					<?php if ($proyecto['precio_ceramica'] > 0) { ?>
+						Precio cerámica: <span><?php echo number_format($proyecto['precio_ceramica'], 2, ".", ""); ?>€</span><br />
 					<?php } ?>
-					<?php if ($proyecto['frente_abuardillado_seleccionado'] > 0) { ?>
-						<div class="item_fila_proyecto_otros" style="float: left; width: 100%;">
-							<i class="fa fa-check"></i> Frente abuardillado
-						</div>
+					<?php if ($proyecto['precio_accesorios_interior'] > 0) { ?>
+						Precio accesorios: <span><?php echo number_format($proyecto['precio_accesorios_interior'], 2, ".", ""); ?>€</span><br />
+					<?php } ?>
+					<?php if ($proyecto['precio_sistema_frenos'] > 0) { ?>
+						Precio sistema frenos: <span><?php echo number_format($proyecto['precio_sistema_frenos'], 2, ".", ""); ?>€</span><br />
+					<?php } ?>
+					<?php if ($proyecto['precio_regleta_led'] > 0) { ?>
+						Precio regletas led: <span><?php echo number_format($proyecto['precio_regleta_led'], 2, ".", ""); ?>€</span><br />
+					<?php } ?>
+					<?php if ($proyecto['precio_frente_abuardillado'] > 0) { ?>
+						Precio frente abuardillado: <span><?php echo number_format($proyecto['precio_frente_abuardillado'], 2, ".", ""); ?>€</span><br />
+					<?php } ?>
+					<?php if ($proyecto['precio_costados'] > 0) { ?>
+						Precio costados: <span><?php echo number_format($proyecto['precio_costados'], 2, ".", ""); ?>€</span><br />
+					<?php } ?>
+					<?php if ($proyecto['precio_fijos'] > 0) { ?>
+						Precio fijos: <span><?php echo number_format($proyecto['precio_fijos'], 2, ".", ""); ?>€</span><br />
 					<?php } ?>
 					<?php if ($proyecto['montaje_frente_seleccionado'] > 0) { ?>
-						<div class="item_fila_proyecto_otros" style="float: left; width: 100%;">
-							<i class="fa fa-check"></i> Montaje de frente de <?php echo $proyecto['montaje_frente_seleccionado']; ?> hojas
-						</div>
+						Precio montaje frente: <span><?php echo number_format($proyecto['precio_montaje_frente'], 2, ".", ""); ?>€</span><br />
 					<?php } ?>
 					<?php if ($proyecto['rematar_frente_seleccionado'] > 0) { ?>
-						<div class="item_fila_proyecto_otros" style="float: left; width: 100%;">
-							<i class="fa fa-check"></i> Remate de frente
-						</div>
+						Precio remate frente: <span><?php echo number_format($proyecto['precio_rematar_frente'], 2, ".", ""); ?>€</span><br />
 					<?php } ?>
-				<?php } ?>
-				<?php
-				if ($proyecto['juego_led_seleccionado'] > 0 || $proyecto['montaje_interior_seleccionado'] > 0 || $proyecto['rematar_interior_seleccionado'] > 0) {
-				?>
-					<div class="item_fila_proyecto_otros" style="float: left; width: 100%;">
-						<h3>Interior</h3>
-					</div>
 					<?php if ($proyecto['juego_led_seleccionado'] > 0) { ?>
-						<div class="item_fila_proyecto_otros" style="float: left; width: 100%;">
-							<i class="fa fa-check"></i> Juego de led interior
-						</div>
-					<?php } ?>
-					<?php if ($proyecto['montaje_interior_seleccionado'] > 0) { ?>
-						<div class="item_fila_proyecto_otros" style="float: left; width: 100%;">
-							<i class="fa fa-check"></i> Montaje de interior de <?php echo $proyecto['montaje_interior_seleccionado']; ?> módulos
-						</div>
+						Precio juego led: <span><?php echo number_format($proyecto['precio_juego_led'], 2, ".", ""); ?>€</span><br />
 					<?php } ?>
 					<?php if ($proyecto['rematar_interior_seleccionado'] > 0) { ?>
-						<div class="item_fila_proyecto_otros" style="float: left; width: 100%;">
-							<i class="fa fa-check"></i> Remate de interior
-						</div>
+						Precio remate interior: <span><?php echo number_format($proyecto['precio_rematar_interior'], 2, ".", ""); ?>€</span><br />
 					<?php } ?>
-				<?php } ?>
-				<?php
-				if ($proyecto['desmontaje_frente_seleccionado'] > 0 || $proyecto['desmontaje_interior_seleccionado'] > 0 || $proyecto['albanileria_con_seleccionado'] > 0 || $proyecto['albanileria_sin_seleccionado'] > 0) {
-				?>
-					<div class="item_fila_proyecto_otros" style="float: left; width: 100%;">
-						<h3>Otros</h3>
-					</div>
-					<?php if ($proyecto['desmontaje_frente_seleccionado'] > 0) { ?>
-						<div class="item_fila_proyecto_otros" style="float: left; width: 100%;">
-							<?php $desm_frente = $db->getVar('SELECT nombre FROM desmontajes_frentes WHERE id=' . $proyecto['desmontaje_frente_seleccionado']); ?>
-							<i class="fa fa-check"></i> Desmontaje de frente de <?php echo $desm_frente; ?>
-						</div>
+					Precio montaje: <span><?php echo number_format($proyecto['precio_montaje_frente'], 2, ".", ""); ?>€</span><br />
+					<?php if ($proyecto['montaje_interior_seleccionado'] > 0) { ?>
+						Precio montaje interior: <span><?php echo number_format($proyecto['precio_montaje_interior'], 2, ".", ""); ?>€</span><br />
 					<?php } ?>
-					<?php if ($proyecto['desmontaje_interior_seleccionado'] > 0) { ?>
-						<div class="item_fila_proyecto_otros" style="float: left; width: 100%;">
-							<?php $desm_interior = $db->getVar('SELECT nombre FROM desmontajes_interiores WHERE id=' . $proyecto['desmontaje_interior_seleccionado']); ?>
-							<i class="fa fa-check"></i> Desmontaje de interior de <?php echo $desm_interior; ?>
-						</div>
+					<?php if ($proyecto['precio_desmontaje'] > 0) { ?>
+						Precio desmontaje: <span><?php echo number_format($proyecto['precio_desmontaje'], 2, ".", ""); ?>€</span><br />
+					<?php } else {
+					?>
+						<?php if ($proyecto['desmontaje_frente_seleccionado'] > 0) { ?>
+							Precio desmontaje frente: <span><?php echo number_format($proyecto['precio_desmontaje_frente'], 2, ".", ""); ?>€</span><br />
+						<?php } ?>
+						<?php if ($proyecto['desmontaje_interior_seleccionado'] > 0) { ?>
+							Precio desmontaje interior: <span><?php echo number_format($proyecto['precio_desmontaje_interior'], 2, ".", ""); ?>€</span><br />
+						<?php } ?>
+					<?php } ?>
+					<?php if ($plus_cream_stone>0){ ?>
+						Plus Cream Stone <span><?php echo number_format($plus_cream_stone,2,".",""); ?>€</span> <br />
+					<?php }?>
+					<?php if ($plus_grey_stone>0){ ?>
+						Plus Grey Stone <span><?php echo number_format($plus_grey_stone,2,".",""); ?>€</span> <br />
+					<?php }?>
+					<?php if ($plus_dark_grey>0){ ?>
+						Plus Dark Grey <span><?php echo number_format($plus_dark_grey,2,".",""); ?>€</span> <br />
+					<?php }?>
+					<?php if ($proyecto['precio_albanileria_sencilla'] > 0) { ?>
+						Albanileria sencilla: <span><?php echo number_format($proyecto['precio_albanileria_sencilla'], 2, ".", ""); ?>€</span><br />
+					<?php } ?>
+					<?php if ($proyecto['precio_albanileria_tirar_tabique'] > 0) { ?>
+						Tirar tabique o maletero: <span><?php echo number_format($proyecto['precio_albanileria_tirar_tabique'], 2, ".", ""); ?>€</span><br />
+					<?php } ?>
+					<?php if ($proyecto['precio_albanileria_quitar_solera'] > 0) { ?>
+						Quitar solera: <span><?php echo number_format($proyecto['precio_albanileria_quitar_solera'], 2, ".", ""); ?>€</span><br />
+					<?php } ?>
+					<?php if ($proyecto['precio_albanileria_mover_enchufe'] > 0) { ?>
+						Mover enchufe o interruptor: <span><?php echo number_format($proyecto['precio_albanileria_mover_enchufe'], 2, ".", ""); ?>€</span><br />
+					<?php } ?>
+					<?php if ($proyecto['precio_albanileria_costado_pladur'] > 0) { ?>
+						Hacer costado de pladur: <span><?php echo number_format($proyecto['precio_albanileria_costado_pladur'], 2, ".", ""); ?>€</span><br />
 					<?php } ?>
 					<?php if ($proyecto['albanileria_con_seleccionado'] > 0) { ?>
-						<div class="item_fila_proyecto_otros" style="float: left; width: 100%;">
-							<i class="fa fa-check"></i> Albañilería con solera
-						</div>
+						Albañilería con solera: <span><?php echo number_format($proyecto['precio_albanileria_con'], 2, ".", ""); ?>€</span><br />
 					<?php } ?>
 					<?php if ($proyecto['albanileria_sin_seleccionado'] > 0) { ?>
-						<div class="item_fila_proyecto_otros" style="float: left; width: 100%;">
-							<i class="fa fa-check"></i> Albañilería sin solera
-						</div>
+						Albañilería sin solera: <span><?php echo number_format($proyecto['precio_albanileria_sin'], 2, ".", ""); ?>€</span><br />
 					<?php } ?>
-				<?php } ?>
-			</div>
-		<?php
-		}
-		?>
-		<?php
-		if ($proyecto['observaciones'] != "") {
-		?>
-			<div class="fila_proyecto">
-				<h2>Observaciones</h2>
-				<div class="item_fila_proyecto_otros" style="float: left; width: 100%;">
-					<?php echo nl2br($proyecto['observaciones']); ?>
+					<?php if ($proyecto['precio_km_medicion'] > 0) { ?>
+						Precio km para medición : <span><?php echo number_format($proyecto['precio_km_medicion'], 2, ".", ""); ?>€</span><br />
+					<?php } ?>
+					<?php if ($proyecto['precio_km_montaje'] > 0) { ?>
+						Precio km para montaje: <span><?php echo number_format($proyecto['precio_km_montaje'], 2, ".", ""); ?>€</span><br />
+					<?php } ?>
+					<?php if ($proyecto['precio_extras_1'] > 0) { ?>
+						Rematar por dentro: <span><?php echo number_format($proyecto['precio_extras_1'], 2, ".", ""); ?>€</span><br />
+					<?php } ?>
+					<?php if ($proyecto['precio_extras_2'] > 0) { ?>
+						Modulo con viga: <span><?php echo number_format($proyecto['precio_extras_2'], 2, ".", ""); ?>€</span><br />
+					<?php } ?>
+					<?php if ($proyecto['precio_extras_3'] > 0) { ?>
+						Interior con chaflán: <span><?php echo number_format($proyecto['precio_extras_3'], 2, ".", ""); ?>€</span><br />
+					<?php } ?>
+					<?php if ($proyecto['precio_extras_4'] > 0) { ?>
+						Registro: <span><?php echo number_format($proyecto['precio_extras_4'], 2, ".", ""); ?>€</span><br />
+					<?php } ?>
+					<?php if ($proyecto['precio_extras_5'] > 0) { ?>
+						Desplazar punto de luz a costado: <span><?php echo number_format($proyecto['precio_extras_5'], 2, ".", ""); ?>€</span><br />
+					<?php } ?>
+					<?php if ($proyecto['precio_extras_6'] > 0) { ?>
+						Módulo forrado: <span><?php echo number_format($proyecto['precio_extras_6'], 2, ".", ""); ?>€</span><br />
+					<?php } ?>
+					<?php if ($proyecto['precio_extras_7'] > 0) { ?>
+						Módulo diamante: <span><?php echo number_format($proyecto['precio_extras_7'], 2, ".", ""); ?>€</span><br />
+					<?php } ?>
+					<?php if ($proyecto['precio_extras_8'] > 0) { ?>
+						Incremento por balda extra: <span><?php echo number_format($proyecto['precio_extras_8'], 2, ".", ""); ?>€</span><br />
+					<?php } ?>
+					<?php if ($proyecto['precio_extras_9'] > 0) { ?>
+						Incremento por módulo partido: <span><?php echo number_format($proyecto['precio_extras_9'], 2, ".", ""); ?>€</span><br />
+					<?php } ?>
+					<?php if ($proyecto['leds_incrustados'] > 0) { ?>
+						Leds incrustados: <span><?php echo number_format($proyecto['leds_incrustados'], 2, ".", ""); ?>€</span><br />
+					<?php } ?>
+					<?php if ($proyecto['herrajes_negros'] > 0) { ?>
+						Herrajes negros: <span><?php echo number_format($proyecto['herrajes_negros'], 2, ".", ""); ?>€</span><br />
+					<?php } ?>
+					<?php if ($proyecto['multitaladro'] > 0) { ?>
+						Multitaladro: <span><?php echo number_format($proyecto['multitaladro'], 2, ".", ""); ?>€</span><br />
+					<?php } ?>
+					<?php if ($proyecto['espejo_extraible'] > 0) { ?>
+						Espejo extraíble: <span><?php echo number_format($proyecto['espejo_extraible'], 2, ".", ""); ?>€</span><br />
+					<?php } ?>
+					<?php if ($proyecto['espejo_carril'] > 0) { ?>
+						Espejo en carril: <span><?php echo number_format($proyecto['espejo_carril'], 2, ".", ""); ?>€</span><br />
+					<?php } ?>
+					<?php if ($proyecto['baldas_inclinadas'] > 0) { ?>
+						Baldas inclinadas: <span><?php echo number_format($proyecto['baldas_inclinadas'], 2, ".", ""); ?>€</span><br />
+					<?php } ?>
+					<?php if ($proyecto['kit_plegable'] > 0) { ?>
+						Kit plegable: <span><?php echo number_format($proyecto['kit_plegable'], 2, ".", ""); ?>€</span><br />
+					<?php } ?>
+					<?php if ($proyecto['recrecer_frente'] > 0) { ?>
+						Recrecer frente: <span><?php echo number_format($proyecto['recrecer_frente'], 2, ".", ""); ?>€</span><br />
+					<?php } ?>
+					<?php if ($proyecto['aplicar_descuento'] > 0) { ?>
+						Descuento del <?php echo $proyecto['aplicar_descuento']; ?>%: <span>-<?php echo number_format($proyecto['descuento_cliente'], 2, ".", ""); ?>€</span><br />
+					<?php } ?>
+					<?php echo $proyecto['porcentaje_iva']; ?>% I.V.A.: <span><?php echo number_format($proyecto['iva'], 2, ".", ""); ?>€</span><br />
+					<b>PRECIO TOTAL: <span><?php echo number_format($proyecto['precio_total'], 2, ".", ""); ?>€</span></b>
 				</div>
-			</div>
-		<?php
-		}
-		?>
-		<div class="fila_proyecto">
-			<h2>Precio</h2>
-			<div class="item_fila_proyecto_precio" style="float: left; width: 100%; text-align: right;">
-				Precio frente: <span style="display: inline-block; width: 80px; text-align: right;"><?php echo number_format($proyecto['precio_frente'], 2, ".", ""); ?>€</span><br />
-				<?php if ($proyecto['inc_desc_frente'] != "") { ?>
-					<?php echo $proyecto['inc_desc_frente']; ?>: <span style="display: inline-block; width: 80px; text-align: right;"><?php echo number_format($proyecto['cant_inc_desc_frente'], 2, ".", ""); ?>€</span><br />
-				<?php } ?>
-				<?php if ($proyecto['precio_modulos_interior'] > 0) { ?>
-					Precio interior: <span style="display: inline-block; width: 80px; text-align: right;"><?php echo number_format($proyecto['precio_modulos_interior'], 2, ".", ""); ?>€</span><br />
-				<?php } ?>
-				<?php if ($proyecto['inc_desc_interior'] != "") { ?>
-					<?php echo $proyecto['inc_desc_interior']; ?>: <span style="display: inline-block; width: 80px; text-align: right;"><?php echo number_format($proyecto['cant_inc_desc_interior'], 2, ".", ""); ?>€</span><br />
-				<?php } ?>
-				<?php if ($proyecto['precio_tapetas'] > 0) { ?>
-					Precio tapetas: <span style="display: inline-block; width: 80px; text-align: right;"><?php echo number_format($proyecto['precio_tapetas'], 2, ".", ""); ?>€</span><br />
-				<?php } ?>
-				<?php if ($proyecto['precio_laterales'] > 0) { ?>
-					Precio laterales: <span style="display: inline-block; width: 80px; text-align: right;"><?php echo number_format($proyecto['precio_laterales'], 2, ".", ""); ?>€</span><br />
-				<?php } ?>
-				<?php if ($proyecto['precio_ceramica'] > 0) { ?>
-					Precio cerámica: <span style="display: inline-block; width: 80px; text-align: right;"><?php echo number_format($proyecto['precio_ceramica'], 2, ".", ""); ?>€</span><br />
-				<?php } ?>
-				<?php if ($proyecto['precio_accesorios_interior'] > 0) { ?>
-					Precio accesorios: <span style="display: inline-block; width: 80px; text-align: right;"><?php echo number_format($proyecto['precio_accesorios_interior'], 2, ".", ""); ?>€</span><br />
-				<?php } ?>
-				<?php if ($proyecto['precio_sistema_frenos'] > 0) { ?>
-					Precio sistema frenos: <span style="display: inline-block; width: 80px; text-align: right;"><?php echo number_format($proyecto['precio_sistema_frenos'], 2, ".", ""); ?>€</span><br />
-				<?php } ?>
-				<?php if ($proyecto['precio_regleta_led'] > 0) { ?>
-					Precio regletas led: <span style="display: inline-block; width: 80px; text-align: right;"><?php echo number_format($proyecto['precio_regleta_led'], 2, ".", ""); ?>€</span><br />
-				<?php } ?>
-				<?php if ($proyecto['precio_frente_abuardillado'] > 0) { ?>
-					Precio frente abuardillado: <span style="display: inline-block; width: 80px; text-align: right;"><?php echo number_format($proyecto['precio_frente_abuardillado'], 2, ".", ""); ?>€</span><br />
-				<?php } ?>
-				<?php if ($proyecto['precio_costados'] > 0) { ?>
-					Precio costados: <span style="display: inline-block; width: 80px; text-align: right;"><?php echo number_format($proyecto['precio_costados'], 2, ".", ""); ?>€</span><br />
-				<?php } ?>
-				<?php if ($proyecto['precio_fijos'] > 0) { ?>
-					Precio fijos: <span style="display: inline-block; width: 80px; text-align: right;"><?php echo number_format($proyecto['precio_fijos'], 2, ".", ""); ?>€</span><br />
-				<?php } ?>
-				<?php if ($proyecto['montaje_frente_seleccionado'] > 0) { ?>
-					Precio montaje frente: <span style="display: inline-block; width: 80px; text-align: right;"><?php echo number_format($proyecto['precio_montaje_frente'], 2, ".", ""); ?>€</span><br />
-				<?php } ?>
-				<?php if ($proyecto['rematar_frente_seleccionado'] > 0) { ?>
-					Precio remate frente: <span style="display: inline-block; width: 80px; text-align: right;"><?php echo number_format($proyecto['precio_rematar_frente'], 2, ".", ""); ?>€</span><br />
-				<?php } ?>
-				<?php if ($proyecto['juego_led_seleccionado'] > 0) { ?>
-					Precio juego led: <span style="display: inline-block; width: 80px; text-align: right;"><?php echo number_format($proyecto['precio_juego_led'], 2, ".", ""); ?>€</span><br />
-				<?php } ?>
-				<?php if ($proyecto['rematar_interior_seleccionado'] > 0) { ?>
-					Precio remate interior: <span style="display: inline-block; width: 80px; text-align: right;"><?php echo number_format($proyecto['precio_rematar_interior'], 2, ".", ""); ?>€</span><br />
-				<?php } ?>
-				Precio montaje: <span style="display: inline-block; width: 80px; text-align: right;"><?php echo number_format($proyecto['precio_montaje_frente'], 2, ".", ""); ?>€</span><br />
-				<?php if ($proyecto['montaje_interior_seleccionado'] > 0) { ?>
-					Precio montaje interior: <span style="display: inline-block; width: 80px; text-align: right;"><?php echo number_format($proyecto['precio_montaje_interior'], 2, ".", ""); ?>€</span><br />
-				<?php } ?>
-				<?php if ($proyecto['desmontaje_frente_seleccionado'] > 0) { ?>
-					Precio desmontaje frente: <span style="display: inline-block; width: 80px; text-align: right;"><?php echo number_format($proyecto['precio_desmontaje_frente'], 2, ".", ""); ?>€</span><br />
-				<?php } ?>
-				<?php if ($proyecto['desmontaje_interior_seleccionado'] > 0) { ?>
-					Precio desmontaje interior: <span style="display: inline-block; width: 80px; text-align: right;"><?php echo number_format($proyecto['precio_desmontaje_interior'], 2, ".", ""); ?>€</span><br />
-				<?php } ?>
-				<?php if ($proyecto['precio_albanileria_sencilla'] > 0) { ?>
-					Albanileria sencilla: <span><?php echo number_format($proyecto['precio_albanileria_sencilla'], 2, ".", ""); ?>€</span><br />
-				<?php } ?>
-				<?php if ($proyecto['precio_albanileria_tirar_tabique'] > 0) { ?>
-					Tirar tabique o maletero: <span><?php echo number_format($proyecto['precio_albanileria_tirar_tabique'], 2, ".", ""); ?>€</span><br />
-				<?php } ?>
-				<?php if ($proyecto['precio_albanileria_quitar_solera'] > 0) { ?>
-					Quitar solera: <span><?php echo number_format($proyecto['precio_albanileria_quitar_solera'], 2, ".", ""); ?>€</span><br />
-				<?php } ?>
-				<?php if ($proyecto['precio_albanileria_mover_enchufe'] > 0) { ?>
-					Mover enchufe o interruptor: <span><?php echo number_format($proyecto['precio_albanileria_mover_enchufe'], 2, ".", ""); ?>€</span><br />
-				<?php } ?>
-				<?php if ($proyecto['precio_albanileria_costado_pladur'] > 0) { ?>
-					Hacer costado de pladur: <span><?php echo number_format($proyecto['precio_albanileria_costado_pladur'], 2, ".", ""); ?>€</span><br />
-				<?php } ?>
-				<?php if ($proyecto['albanileria_con_seleccionado'] > 0) { ?>
-					Albañilería con solera: <span style="display: inline-block; width: 80px; text-align: right;"><?php echo number_format($proyecto['precio_albanileria_con'], 2, ".", ""); ?>€</span><br />
-				<?php } ?>
-				<?php if ($proyecto['albanileria_sin_seleccionado'] > 0) { ?>
-					Albañilería sin solera: <span style="display: inline-block; width: 80px; text-align: right;"><?php echo number_format($proyecto['precio_albanileria_sin'], 2, ".", ""); ?>€</span><br />
-				<?php } ?>
-				<?php if ($proyecto['precio_km_medicion'] > 0) { ?>
-					Precio km para medición : <span><?php echo number_format($proyecto['precio_km_medicion'], 2, ".", ""); ?>€</span><br />
-				<?php } ?>
-				<?php if ($proyecto['precio_km_montaje'] > 0) { ?>
-					Precio km para montaje: <span><?php echo number_format($proyecto['precio_km_montaje'], 2, ".", ""); ?>€</span><br />
-				<?php } ?>
-				<?php if ($proyecto['precio_extras_1'] > 0) { ?>
-					Rematar por dentro: <span><?php echo number_format($proyecto['precio_extras_1'], 2, ".", ""); ?>€</span><br />
-				<?php } ?>
-				<?php if ($proyecto['precio_extras_2'] > 0) { ?>
-					Rematar interior sin frente: <span><?php echo number_format($proyecto['precio_extras_2'], 2, ".", ""); ?>€</span><br />
-				<?php } ?>
-				<?php if ($proyecto['precio_extras_3'] > 0) { ?>
-					Rematar por dentro: <span><?php echo number_format($proyecto['precio_extras_3'], 2, ".", ""); ?>€</span><br />
-				<?php } ?>
-				<?php if ($proyecto['precio_extras_4'] > 0) { ?>
-					Instalación fijo: <span><?php echo number_format($proyecto['precio_extras_4'], 2, ".", ""); ?>€</span><br />
-				<?php } ?>
-				<?php if ($proyecto['precio_extras_5'] > 0) { ?>
-					Instalación costado: <span><?php echo number_format($proyecto['precio_extras_5'], 2, ".", ""); ?>€</span><br />
-				<?php } ?>
-				<?php if ($proyecto['precio_extras_6'] > 0) { ?>
-					Módulo con viga: <span><?php echo number_format($proyecto['precio_extras_6'], 2, ".", ""); ?>€</span><br />
-				<?php } ?>
-				<?php if ($proyecto['precio_extras_7'] > 0) { ?>
-					Interior con chaflán: <span><?php echo number_format($proyecto['precio_extras_7'], 2, ".", ""); ?>€</span><br />
-				<?php } ?>
-				<?php if ($proyecto['precio_extras_8'] > 0) { ?>
-					Frente con chaflán: <span><?php echo number_format($proyecto['precio_extras_8'], 2, ".", ""); ?>€</span><br />
-				<?php } ?>
-				<?php if ($proyecto['precio_extras_9'] > 0) { ?>
-					Registro: <span><?php echo number_format($proyecto['precio_extras_9'], 2, ".", ""); ?>€</span><br />
-				<?php } ?>
-				<?php if ($proyecto['precio_extras_10'] > 0) { ?>
-					Desplazar punto de luz a costado: <span><?php echo number_format($proyecto['precio_extras_10'], 2, ".", ""); ?>€</span><br />
-				<?php } ?>
-				<?php if ($proyecto['precio_extras_11'] > 0) { ?>
-					Módulo forrado: <span><?php echo number_format($proyecto['precio_extras_11'], 2, ".", ""); ?>€</span><br />
-				<?php } ?>
-				<?php if ($proyecto['precio_extras_12'] > 0) { ?>
-					Incremento por balda extra: <span><?php echo number_format($proyecto['precio_extras_12'], 2, ".", ""); ?>€</span><br />
-				<?php } ?>
-				<?php if ($proyecto['precio_extras_13'] > 0) { ?>
-					Incremento por módulo partido: <span><?php echo number_format($proyecto['precio_extras_13'], 2, ".", ""); ?>€</span><br />
-				<?php } ?>
-				<?php if ($proyecto['aplicar_descuento'] > 0) { ?>
-					Descuento del <?php echo $proyecto['aplicar_descuento']; ?>%: <span style="display: inline-block; width: 80px; text-align: right;">-<?php echo number_format($proyecto['descuento_cliente'], 2, ".", ""); ?>€</span><br />
-				<?php } ?>
-				<?php echo $proyecto['porcentaje_iva']; ?>% I.V.A.: <span style="display: inline-block; width: 80px; text-align: right;"><?php echo number_format($proyecto['iva'], 2, ".", ""); ?>€</span><br />
-				<b>PRECIO TOTAL: <span style="display: inline-block; width: 80px; text-align: right;"><?php echo number_format($proyecto['precio_total'], 2, ".", ""); ?>€</span></b>
-			</div>
 		</div>
 		<div class="fila_proyecto">
 			<?php

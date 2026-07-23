@@ -3,6 +3,8 @@
 if (!isset($_SESSION['logueado']) || $_SESSION['logueado'] != "logged")
 	die();
 
+require_once "include/secciones/proyectos/functions/data_armarios.php";
+
 // CONSULTAMOS LOS DATOS DEL PROYECTO
 $proyecto = $db->getRow('SELECT id_usuario, id_tarifa, descuento, id_serie, id_acabado, id_color_perfileria, ancho, alto, fondo, num_puertas, diseno_puerta_1, diseno_puerta_2, diseno_puerta_3, diseno_puerta_4, diseno_puerta_5, diseno_puerta_6, diseno_puerta_7, diseno_puerta_8, ceramica_puerta_1, ceramica_puerta_2, ceramica_puerta_3, ceramica_puerta_4, ceramica_puerta_5, ceramica_puerta_6, ceramica_puerta_7, ceramica_puerta_8, colores_puerta_1, colores_puerta_2, colores_puerta_3, colores_puerta_4, colores_puerta_5, colores_puerta_6, colores_puerta_7, colores_puerta_8, num_modulos_interior, interior_puerta_1, interior_puerta_2, interior_puerta_3, interior_puerta_4, interior_puerta_5, interior_puerta_6, interior_puerta_7, interior_puerta_8, laterales_seleccionado, tapetas_seleccionado, costados_seleccionado, fijos_seleccionado, montaje_frente_seleccionado, montaje_interior_seleccionado, desmontaje_frente_seleccionado, desmontaje_interior_seleccionado, juego_led_seleccionado, rematar_frente_seleccionado, rematar_interior_seleccionado, montaje_frente_arjomy_seleccionado, montaje_interior_arjomy_seleccionado, desmontaje_frente_arjomy_seleccionado, desmontaje_interior_arjomy_seleccionado, juego_led_arjomy_seleccionado, rematar_frente_arjomy_seleccionado, sistema_frenos_seleccionado, regleta_led_seleccionado, frente_abuardillado_seleccionado, albanileria_con_seleccionado, albanileria_sin_seleccionado, precio_frente, inc_desc_frente, cant_inc_desc_frente, precio_ceramica, precio_modulos_interior, precio_accesorios_interior, inc_desc_interior, cant_inc_desc_interior, precio_tapetas, precio_laterales, precio_costados, precio_fijos, precio_montaje_frente, precio_montaje_interior, precio_desmontaje_frente, precio_desmontaje_interior, precio_juego_led, precio_rematar_frente, precio_rematar_interior, precio_sistema_frenos, precio_regleta_led, precio_frente_abuardillado, precio_albanileria_con, precio_albanileria_sin, precio_costados_dist, precio_fijos_dist, precio_montaje_frente_dist, precio_montaje_interior_dist, precio_desmontaje_frente_dist, precio_desmontaje_interior_dist, precio_juego_led_dist, precio_rematar_frente_dist, precio_sistema_frenos_dist, aplicar_descuento, descuento_cliente, porcentaje_iva, iva, precio_total, observaciones, nombre_cliente, dni_cliente, direccion_cliente, poblacion_cliente, cp_cliente, provincia_cliente, telefono_cliente, email_cliente, horario_cliente, fecha_proyecto, precio_km_medicion, precio_km_montaje, precio_extras_1, precio_extras_2, precio_extras_3, precio_extras_4, precio_extras_5, precio_extras_6, precio_extras_7, precio_extras_8, precio_extras_9, precio_extras_10, precio_extras_11, precio_extras_12, precio_extras_13, precio_desmontaje, precio_albanileria_sencilla, precio_albanileria_tirar_tabique, precio_albanileria_quitar_solera, precio_albanileria_mover_enchufe, precio_albanileria_costado_pladur,leds_incrustados,herrajes_negros,multitaladro,espejo_extraible,espejo_carril,baldas_inclinadas,kit_plegable,recrecer_frente FROM proyectos WHERE id_usuario=' . $_SESSION['id_usuario'] . ' AND id=' . $id . ' AND eliminado=0');
 
@@ -38,129 +40,16 @@ $acabado = $db->getVar('SELECT nombre FROM acabados WHERE id=' . $proyecto['id_a
 $perfileria = $db->getRow('SELECT nombre, imagen FROM colores WHERE id=' . $proyecto['id_color_perfileria']);
 $tarifa = $db->getVar('SELECT porcentaje FROM tarifa WHERE id='.$proyecto['id_tarifa']);
 
-function extractColorInterior($num_modulos,$db)
-{
-	$plus_cream_stone = 0;
-	$plus_grey_stone = 0;
-
-	$num_modulo = 0;
-	for ($j = 1; $j <= $num_modulos; $j++) 
-	{
-		$num_modulo++;
-		global ${'interior_puerta_'.$num_modulo};
-		$nodo_puerta = ${'interior_puerta_'.$num_modulo};
-		if(count($nodo_puerta) > 9)
-		{
-			$color_interior = $db->getVar('SELECT nombre FROM colores WHERE id='.$nodo_puerta[28]);
-			$color_cantoneras = $db->getVar('SELECT nombre FROM colores WHERE id='.$nodo_puerta[29]);
-
-			if($color_interior == "Cream Stone" || $color_cantoneras == "Cream Stone")
-			{
-				$plus_cream_stone += 20;
-			}
-
-			if($color_interior == "Grey Stone" || $color_cantoneras == "Grey Stone")
-			{
-				$plus_grey_stone += 20;
-			}
-		}
-		else
-		{
-			$color_interior = $db->getVar('SELECT nombre FROM colores WHERE id='.$nodo_puerta[28]);
-			$color_cantoneras = $db->getVar('SELECT nombre FROM colores WHERE id='.$nodo_puerta[29]);
-
-			if($color_interior == "Cream Stone" || $color_cantoneras == "Cream Stone")
-			{
-				$plus_cream_stone += 20;
-			}
-
-			if($color_interior == "Grey Stone" || $color_cantoneras == "Grey Stone")
-			{
-				$plus_grey_stone += 20;
-			}
-		}
-	}
-
-	return [
-		'cream_stone' => $plus_cream_stone,
-		'grey_stone' => $plus_grey_stone
-	];
-}
-
 $plus_cream_stone = 0;
 $plus_grey_stone = 0;
 $plus_dark_grey = 0;
 $incremento_ral = 0;
 
-for($i = 1; $i <= $proyecto['num_puertas']; $i++)
-{
-	$diseno_puerta = $db->getRow('SELECT d.nombre as diseno, t.id as terminacion FROM disenos as d, terminaciones as t WHERE d.id=' . ${"diseno_puerta_" . $i}[0] . ' AND t.id=' . ${"diseno_puerta_" . $i}[1]);
-	$zonas_puerta = $db->getResults('SELECT pz.zona as zona, pz.id_colores_tipo as id_colores_tipo, ct.nombre as tipo FROM puertas_zonas as pz, disenos_puertas as dp, colores_tipo as ct WHERE pz.id_disenos_puertas = dp.id AND pz.id_colores_tipo = ct.id AND dp.id_acabados = ' . $proyecto['id_acabado'] . ' AND dp.id_disenos = ' . ${"diseno_puerta_" . $i}[0] . ' AND dp.id_terminaciones = ' . ${"diseno_puerta_" . $i}[1] . ' AND dp.id_puertas = ' . ${"diseno_puerta_" . $i}[2] . ' ORDER BY pz.zona');
-	$found_cream_stone = false;
-	$found_grey_stone = false;
-	$count_dark_grey = 0;
-	$zona_cristal = 0;
-	foreach ($zonas_puerta as $index => $zona_puerta) 
-	{
-		// Comprobamos si hay más del mismo tipo para ponerle el número detrás o no
-		$hay_mas = false;
-		if (isset($zonas_puerta[$index + 1]['id_colores_tipo']) && $zona_puerta['id_colores_tipo'] == $zonas_puerta[$index + 1]['id_colores_tipo']) 
-		{
-			$hay_mas = true;
-		}
+$result_puertas = extractColorPuerta($db,$proyecto['num_puertas'],$proyecto);
 
-		// SE OBTIENEN LOS DATOS CORRESPONDIENTES
-		$nombre_color_zona = "";
-		if (isset(${"colores_puerta_" . $i}[$index]) && ${"colores_puerta_" . $i}[$index] > 0) 
-		{
-			$color_zona = $db->getRow('SELECT nombre, imagen FROM colores WHERE id = ' . ${"colores_puerta_" . $i}[$index]);
-			$nombre_color_zona = $color_zona['nombre'];
-		}
-
-		if($nombre_color_zona=="Cream Stone")
-		{
-			$found_cream_stone = true;
-		}
-
-		if($nombre_color_zona=="Grey Stone")
-		{
-			$found_grey_stone = true;
-		}
-
-		if($nombre_color_zona=="Dark Grey" && ($diseno_puerta['terminacion'] == 2 || $diseno_puerta['terminacion'] == 3 || $diseno_puerta['terminacion'] == 4 || $diseno_puerta['terminacion'] == 7 || $diseno_puerta['terminacion'] == 8 || $diseno_puerta['terminacion'] == 17 || $diseno_puerta['terminacion'] == 18 || $diseno_puerta['terminacion'] == 19 || $diseno_puerta['terminacion'] == 28))
-		{
-			$count_dark_grey+=1;
-		}
-		
-		if(preg_match('/^Cristal\d*$/', $zona_puerta[2]))
-		{
-			$zona_cristal++;
-		}
-
-	}
-
-	if($found_cream_stone)
-	{
-		$plus_cream_stone += 20;
-	}
-
-	if($found_grey_stone)
-	{
-		$plus_grey_stone += 20;
-	}
-
-	if($count_dark_grey>0)
-	{
-		$porcentaje_cristal = ($count_dark_grey * 1) / $zona_cristal;
-		$porcentaje = 0;
-		if($diseno_puerta['terminacion'] == 2 || $diseno_puerta['terminacion'] == 7 || $diseno_puerta['terminacion'] == 18){ $porcentaje = (0.33 * $porcentaje_cristal); }
-		if($diseno_puerta['terminacion'] == 3 || $diseno_puerta['terminacion'] == 8 || $diseno_puerta['terminacion'] == 19 || $diseno_puerta['terminacion'] == 28){ $porcentaje = (0.50 * $porcentaje_cristal); }
-		if($diseno_puerta['terminacion'] == 4 || $diseno_puerta['terminacion'] == 17){ $porcentaje = (1 * $porcentaje_cristal); }
-
-		$puerta = intval($proyecto['ancho']) / $proyecto['num_puertas']; // Ancho de una puerta
-		$plus_dark_grey += (35 * ($puerta * intval($proyecto['alto']) * $porcentaje / 10000));
-	}
-}
+$plus_cream_stone = $result_puertas['cream_stone'];
+$plus_grey_stone = $result_puertas['grey_stone'];
+$plus_dark_grey = $result_puertas['dark_grey'];
 
 $plus_dark_grey = $plus_dark_grey + (($plus_dark_grey*$tarifa) / 100);
 
@@ -761,15 +650,6 @@ if($proyecto['num_modulos_interior'] > 0)
 					<?php if ($proyecto['montaje_interior_seleccionado'] > 0) { ?>
 						Precio montaje interior: <span><?php echo number_format($proyecto['precio_montaje_interior'], 2, ".", ""); ?>€</span><br />
 					<?php } ?>
-					<?php if ($plus_cream_stone>0){ ?>
-						Plus Cream Stone <span><?php echo number_format($plus_cream_stone,2,".",""); ?>€</span> <br />
-					<?php }?>
-					<?php if ($plus_grey_stone>0){ ?>
-						Plus Grey Stone <span><?php echo number_format($plus_grey_stone,2,".",""); ?>€</span> <br />
-					<?php }?>
-					<?php if ($plus_dark_grey>0){ ?>
-						Plus Dark Grey <span><?php echo number_format($plus_dark_grey,2,".",""); ?>€</span> <br />
-					<?php }?>
 					<?php if ($proyecto['precio_desmontaje'] > 0) { ?>
 						Precio desmontaje: <span><?php echo number_format($proyecto['precio_desmontaje'], 2, ".", ""); ?>€</span><br />
 					<?php } else {
@@ -781,6 +661,15 @@ if($proyecto['num_modulos_interior'] > 0)
 							Precio desmontaje interior: <span><?php echo number_format($proyecto['precio_desmontaje_interior'], 2, ".", ""); ?>€</span><br />
 						<?php } ?>
 					<?php } ?>
+					<?php if ($plus_cream_stone>0){ ?>
+						Plus Cream Stone <span><?php echo number_format($plus_cream_stone,2,".",""); ?>€</span> <br />
+					<?php }?>
+					<?php if ($plus_grey_stone>0){ ?>
+						Plus Grey Stone <span><?php echo number_format($plus_grey_stone,2,".",""); ?>€</span> <br />
+					<?php }?>
+					<?php if ($plus_dark_grey>0){ ?>
+						Plus Dark Grey <span><?php echo number_format($plus_dark_grey,2,".",""); ?>€</span> <br />
+					<?php }?>
 					<?php if ($proyecto['precio_albanileria_sencilla'] > 0) { ?>
 						Albanileria sencilla: <span><?php echo number_format($proyecto['precio_albanileria_sencilla'], 2, ".", ""); ?>€</span><br />
 					<?php } ?>
