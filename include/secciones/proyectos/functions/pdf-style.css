@@ -25,12 +25,19 @@ body {
     font-size: 14px;
     background-color: #ffffff;
     width: 100%;
-    margin: 0 auto;
+    margin: 0.2% auto;
+    padding: 0%;
     height: 100%;
     color: #444444;
     background-position: fixed;
     background-repeat: no-repeat;
     background-size: cover;
+}
+
+#generation-container{
+    width: 95%;
+    display: block;
+    margin: 3% auto;
 }
 
 .fila_proyecto {
