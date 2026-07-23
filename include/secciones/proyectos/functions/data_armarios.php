@@ -52,6 +52,11 @@ function extractColorPuerta($db,$puertas,$proyecto)
                 $found_grey_stone = true;
             }
 
+            if($nombre_color_zona=="Blanco RAL 9010")
+            {
+                $incremento_ral = 1;
+            }
+
             if($nombre_color_zona=="Dark Grey" && ($diseno_puerta['terminacion'] == 2 || $diseno_puerta['terminacion'] == 3 || $diseno_puerta['terminacion'] == 4 || $diseno_puerta['terminacion'] == 7 || $diseno_puerta['terminacion'] == 8 || $diseno_puerta['terminacion'] == 17 || $diseno_puerta['terminacion'] == 18 || $diseno_puerta['terminacion'] == 19 || $diseno_puerta['terminacion'] == 28))
             {
                 
@@ -91,7 +96,8 @@ function extractColorPuerta($db,$puertas,$proyecto)
     return [
         'cream_stone' => $plus_cream_stone,
         'grey_stone' => $plus_grey_stone,
-        'dark_grey' => $plus_dark_grey
+        'dark_grey' => $plus_dark_grey,
+        'incremento_ral' => $incremento_ral
     ];
 }
 

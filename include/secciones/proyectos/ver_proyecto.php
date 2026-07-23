@@ -50,6 +50,13 @@ $result_puertas = extractColorPuerta($db,$proyecto['num_puertas'],$proyecto);
 $plus_cream_stone = $result_puertas['cream_stone'];
 $plus_grey_stone = $result_puertas['grey_stone'];
 $plus_dark_grey = $result_puertas['dark_grey'];
+$incremento_ral = $result_puertas['incremento_ral'];
+
+if($incremento_ral == 1)
+{
+	$valor_incremento = 20 / 100;
+	$incremento_ral =  (intval($proyecto['precio_frente']) + intval($proyecto['cant_inc_desc_frente']))  * $valor_incremento; 
+}
 
 $plus_dark_grey = $plus_dark_grey + (($plus_dark_grey*$tarifa) / 100);
 
@@ -669,6 +676,9 @@ if($proyecto['num_modulos_interior'] > 0)
 					<?php }?>
 					<?php if ($plus_dark_grey>0){ ?>
 						Plus Dark Grey <span><?php echo number_format($plus_dark_grey,2,".",""); ?>€</span> <br />
+					<?php }?>
+					<?php if ($incremento_ral>0){ ?>
+						Incremento Blanco RAL 9010 (20%) <span><?php echo number_format($incremento_ral,2,".",""); ?>€</span> <br />
 					<?php }?>
 					<?php if ($proyecto['precio_albanileria_sencilla'] > 0) { ?>
 						Albanileria sencilla: <span><?php echo number_format($proyecto['precio_albanileria_sencilla'], 2, ".", ""); ?>€</span><br />
